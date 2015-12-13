@@ -1,0 +1,30 @@
+{
+  "name" : "galmi/xacmlbundle",
+  "description" : "XACML Bundle",
+  "type" : "symfony-bundle",
+  "authors" : [{
+    "name" : "galmi",
+    "email" : "galmi.ru@gmail.com"
+  }],
+  "keywords" : [
+    "XACML Bundle"
+  ],
+  "license" : [
+    "MIT"
+  ],
+  "require" : {
+  },
+  "autoload" : {
+    "psr-0" : {
+      "Company\\DemoBundle" : ""
+    }
+  },
+  "target-dir" : "Galmi/XacmlBundle",
+  "repositories" : [{
+  }],
+  "extra" : {
+    "branch-alias" : {
+      "dev-master" : "master"
+    }
+  }
+}
