@@ -1,0 +1,3 @@
+galmi_xacml_homepage:
+    path:     /
+    defaults: { _controller: GalmiXacmlBundle:Default:index }
