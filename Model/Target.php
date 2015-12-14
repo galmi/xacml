@@ -5,75 +5,74 @@ namespace Galmi\XacmlBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Galmi\XacmlBundle\Model\Target\TargetType;
 
-class Target
+class Target implements TargetInterface
 {
     /**
      * @var Collection
      */
-    protected $matches;
-
-    /**
-     * @var TargetType
-     */
-    protected $type;
+    protected $targetAnyOf;
 
     /**
      * @return Collection
      */
-    public function getMatches()
+    public function getTargetAnyOf()
     {
-        return $this->matches ?: $this->matches = new ArrayCollection();
+        return $this->targetAnyOf ?: $this->targetAnyOf = new ArrayCollection();
     }
 
     /**
-     * @param Match $match
+     * @param TargetAnyOf $match
      * @return $this
      */
-    public function addMatch(Match $match)
+    public function addTargetAnyOf(TargetAnyOf $match)
     {
-        if (!$this->getMatches()->contains($match)) {
-            $this->getMatches()->add($match);
+        if (!$this->getTargetAnyOf()->contains($match)) {
+            $this->getTargetAnyOf()->add($match);
         }
 
         return $this;
     }
 
     /**
-     * @param Match $match
+     * @param TargetAnyOf $match
      * @return $this
      */
-    public function removeMatch(Match $match)
+    public function removeTargetAnyOf(TargetAnyOf $match)
     {
-        if ($this->getMatches()->contains($match)) {
-            $this->getMatches()->remove($match);
+        if ($this->getTargetAnyOf()->contains($match)) {
+            $this->getTargetAnyOf()->remove($match);
         }
 
         return $this;
     }
 
     /**
-     * @return TargetType
+     *
+     *  -------------------------------------------
+     * |     <AnyOf> values      |  Target value   |
+     *  -------------------------------------------
+     * | All “Match”             | “Match”         |
+     * | At least one “No Match” | “No Match”      |
+     * | Otherwise               | “Indeterminate” |
+     *  -------------------------------------------
+     *
+     * @return MatchEnum
      */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param TargetType $type
-     * @return $this
-     */
-    public function setType(TargetType $type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function evaluate()
     {
-        return $this->getType()->evaluate($this->getMatches());
+        if ($this->getTargetAnyOf()->count() == 0) {
+            return new MatchEnum(MatchEnum::MATCH);
+        }
+        /** @var TargetAnyOf $target */
+        foreach ($this->getTargetAnyOf() as $target) {
+            $targetEvaluate = $target->evaluate();
+            if ($targetEvaluate == MatchEnum::NOT_MATCH) {
+                return new MatchEnum(MatchEnum::NOT_MATCH);
+            } else if ($targetEvaluate == MatchEnum::INDETERMINATE) {
+                return new MatchEnum(MatchEnum::INDETERMINATE);
+            }
+        }
+        return new MatchEnum(MatchEnum::MATCH);
     }
 }

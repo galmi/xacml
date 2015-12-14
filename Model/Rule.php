@@ -14,7 +14,7 @@ class Rule
     /**
      * The intended consequence of a satisfied rule (either "Permit" or "Deny")
      *
-     * @var Decision
+     * @var DecisionEnum
      */
     protected $effect;
 
@@ -73,7 +73,7 @@ class Rule
     }
 
     /**
-     * @return Decision
+     * @return DecisionEnum
      */
     public function getEffect()
     {
@@ -81,7 +81,7 @@ class Rule
     }
 
     /**
-     * @param Decision $effect
+     * @param DecisionEnum $effect
      * @return $this
      */
     public function setEffect($effect)
@@ -129,11 +129,11 @@ class Rule
     /**
      * Evaluation rule
      *
-     * @return Decision
+     * @return DecisionEnum
      */
     public function evaluation()
     {
-        $decision = new Decision(Decision::NOT_APPLICABLE);
+        $decision = new DecisionEnum(DecisionEnum::NOT_APPLICABLE);
         try {
             if ($this->getTarget() == null || $this->getTarget()->evaluate()) {
                 if ($this->getCondition()->evaluate()) {
@@ -141,10 +141,10 @@ class Rule
                 }
             }
         } catch (IndeterminateException $e) {
-            if ($this->getEffect() == Decision::PERMIT) {
-                $decision = new Decision(Decision::INDETERMINATE_P);
+            if ($this->getEffect() == DecisionEnum::PERMIT) {
+                $decision = new DecisionEnum(DecisionEnum::INDETERMINATE_P);
             } else {
-                $decision = new Decision(Decision::INDETERMINATE_D);
+                $decision = new DecisionEnum(DecisionEnum::INDETERMINATE_D);
             }
         }
         return $decision;
