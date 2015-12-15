@@ -1,30 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ildar
- * Date: 15.12.15
- * Time: 0:13
- */
 
 namespace Galmi\XacmlBundle\Model;
 
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-
 class TargetAllOf implements TargetInterface
 {
     /**
-     * @var Collection
+     * @var Match[]
      */
-    protected $matches;
+    protected $matches = array();
 
     /**
-     * @return Collection
+     * @return Match[]
      */
     public function getMatches()
     {
-        return $this->matches ?: $this->matches = new ArrayCollection();
+        return $this->matches ?: $this->matches = array();
     }
 
     /**
@@ -33,8 +24,8 @@ class TargetAllOf implements TargetInterface
      */
     public function addMatch(Match $match)
     {
-        if (!$this->getMatches()->contains($match)) {
-            $this->getMatches()->add($match);
+        if (!in_array($match, $this->getMatches(), true)) {
+            $this->matches[] = $match;
         }
 
         return $this;
@@ -46,8 +37,13 @@ class TargetAllOf implements TargetInterface
      */
     public function removeMatch(Match $match)
     {
-        if ($this->getMatches()->contains($match)) {
-            $this->getMatches()->remove($match);
+        if (in_array($match, $this->getMatches(), true)) {
+            $key = array_search($match, $this->matches, true);
+            if ($key === false) {
+                return false;
+            }
+
+            unset($this->matches[$key]);
         }
 
         return $this;
@@ -66,7 +62,7 @@ class TargetAllOf implements TargetInterface
      */
     public function evaluate()
     {
-        if ($this->getMatches()->count() == 0) {
+        if (count($this->getMatches()) == 0) {
             return new MatchEnum(MatchEnum::INDETERMINATE);
         }
         $hasIndeterminate = false;

@@ -5,6 +5,11 @@ namespace Galmi\XacmlBundle\Model;
 
 class Match
 {
+    protected $id;
+
+    protected $attributeValue;
+
+
     /**
      * @return boolean
      */

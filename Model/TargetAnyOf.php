@@ -9,22 +9,19 @@
 namespace Galmi\XacmlBundle\Model;
 
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-
 class TargetAnyOf implements TargetInterface
 {
     /**
-     * @var Collection
+     * @var TargetAllOf[]
      */
-    protected $targetAllOf;
+    protected $targetAllOf = array();
 
     /**
-     * @return Collection
+     * @return TargetAllOf[]
      */
     public function getTargetAllOf()
     {
-        return $this->targetAllOf ?: $this->targetAllOf = new ArrayCollection();
+        return $this->targetAllOf ?: $this->targetAllOf = array();
     }
 
     /**
@@ -33,8 +30,8 @@ class TargetAnyOf implements TargetInterface
      */
     public function addTargetAllOf(TargetAllOf $match)
     {
-        if (!$this->getTargetAllOf()->contains($match)) {
-            $this->getTargetAllOf()->add($match);
+        if (!in_array($match, $this->getTargetAllOf(), true)) {
+            $this->targetAllOf[] = $match;
         }
 
         return $this;
@@ -46,8 +43,13 @@ class TargetAnyOf implements TargetInterface
      */
     public function removeTargetAllOf(TargetAllOf $match)
     {
-        if ($this->getTargetAllOf()->contains($match)) {
-            $this->getTargetAllOf()->remove($match);
+        if (in_array($match, $this->getTargetAllOf(), true)) {
+            $key = array_search($match, $this->targetAllOf, true);
+            if ($key === false) {
+                return false;
+            }
+
+            unset($this->targetAllOf[$key]);
         }
 
         return $this;
@@ -66,7 +68,7 @@ class TargetAnyOf implements TargetInterface
      */
     public function evaluate()
     {
-        if ($this->getTargetAllOf()->count() == 0) {
+        if (count($this->getTargetAllOf()) == 0) {
             return new MatchEnum(MatchEnum::INDETERMINATE);
         }
         $hasIndeterminate = false;

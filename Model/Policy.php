@@ -3,8 +3,6 @@
 namespace Galmi\XacmlBundle\Model;
 
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Galmi\XacmlBundle\Model\Policy\CombiningAlghoritm;
 
 class Policy
@@ -33,9 +31,9 @@ class Policy
     /**
      * A target, an effect, a condition and (optionally) a set of obligations or advice.  A component of a policy
      *
-     * @var Collection
+     * @var Rule[]
      */
-    protected $rules;
+    protected $rules = array();
 
     /**
      * The procedure for combining decisions from multiple rules
@@ -109,11 +107,11 @@ class Policy
     }
 
     /**
-     * @return Collection
+     * @return Rule[]
      */
     public function getRules()
     {
-        return $this->rules ?: $this->rules = new ArrayCollection();
+        return $this->rules ?: $this->rules = array();
     }
 
     /**
@@ -122,8 +120,8 @@ class Policy
      */
     public function addRule(Rule $rule)
     {
-        if (!$this->getRules()->contains($rule)) {
-            $this->getRules()->add($rule);
+        if (!in_array($rule, $this->getRules(), true)) {
+            $this->rules[] = $rule;
         }
 
         return $this;
@@ -135,8 +133,13 @@ class Policy
      */
     public function removeRule(Rule $rule)
     {
-        if ($this->getRules()->contains($rule)) {
-            $this->getRules()->remove($rule);
+        if (in_array($rule, $this->getRules(), true)) {
+            $key = array_search($rule, $this->rules, true);
+            if ($key === false) {
+                return false;
+            }
+
+            unset($this->rules[$key]);
         }
 
         return $this;
