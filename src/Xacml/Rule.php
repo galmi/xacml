@@ -1,11 +1,8 @@
 <?php
 
-namespace Galmi\XacmlBundle\Model;
+namespace Galmi\Xacml;
 
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Galmi\XacmlBundle\Exception\IndeterminateException;
 
 class Rule
 {
@@ -42,14 +39,14 @@ class Rule
      * An operation specified in a rule, policy or policy set that should be performed by the PEP
      * in conjunction with the enforcement of an authorization decision
      *
-     * @var Collection
+     * @var array
      */
     protected $obligationExpressions;
 
     /**
      * A supplementary piece of information in a policy or policy set which is provided to the PEP with the decision of the PDP.
      *
-     * @var Collection
+     * @var array
      */
     protected $adviceExpressions;
 
@@ -140,7 +137,7 @@ class Rule
                     $decision = $this->getEffect();
                 }
             }
-        } catch (IndeterminateException $e) {
+        } catch (\Exception $e) {
             if ($this->getEffect() == DecisionEnum::PERMIT) {
                 $decision = new DecisionEnum(DecisionEnum::INDETERMINATE_P);
             } else {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Galmi\XacmlBundle\Model;
+namespace Galmi\Xacml;
 
 
 class MatchEnum extends \SplEnum

@@ -1,16 +1,14 @@
 <?php
 
-namespace Galmi\XacmlBundle\Model;
+namespace Galmi\Xacml;
 
-
-use Galmi\XacmlBundle\Exception\IndeterminateException;
 
 class Condition
 {
 
     /**
      * @return boolean
-     * @throws IndeterminateException
+     * @throws \Exception
      */
     public function evaluate()
     {

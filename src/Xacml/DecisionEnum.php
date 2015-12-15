@@ -1,11 +1,11 @@
 <?php
 
-namespace Galmi\XacmlBundle\Model;
+namespace Galmi\Xacml;
 
 /**
  * Class DecisionEnum
  * The result of evaluating a rule, policy or policy set
- * @package Galmi\XacmlBundle\Model
+ * @package Galmi\Xacml
  */
 class DecisionEnum extends \SplEnum
 {

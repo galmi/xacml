@@ -6,7 +6,7 @@
  * Time: 0:20
  */
 
-namespace Galmi\XacmlBundle\Model;
+namespace Galmi\Xacml;
 
 
 interface TargetInterface

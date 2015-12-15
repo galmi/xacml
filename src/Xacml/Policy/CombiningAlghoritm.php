@@ -1,6 +1,6 @@
 <?php
 
-namespace Galmi\XacmlBundle\Model\Policy;
+namespace Galmi\Xacml\Policy;
 
 
 use Doctrine\Common\Collections\Collection;

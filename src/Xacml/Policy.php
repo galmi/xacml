@@ -1,9 +1,9 @@
 <?php
 
-namespace Galmi\XacmlBundle\Model;
+namespace Galmi\Xacml;
 
 
-use Galmi\XacmlBundle\Model\Policy\CombiningAlghoritm;
+use Galmi\Xacml\Policy\CombiningAlghoritm;
 
 class Policy
 {

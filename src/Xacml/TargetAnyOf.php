@@ -6,7 +6,7 @@
  * Time: 0:13
  */
 
-namespace Galmi\XacmlBundle\Model;
+namespace Galmi\Xacml;
 
 
 class TargetAnyOf implements TargetInterface

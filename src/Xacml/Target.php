@@ -1,6 +1,6 @@
 <?php
 
-namespace Galmi\XacmlBundle\Model;
+namespace Galmi\Xacml;
 
 
 class Target implements TargetInterface
