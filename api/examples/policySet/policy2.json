@@ -1,0 +1,33 @@
+{
+  "id": 2,
+  "description": "Policy <Create document>",
+  "ruleCombiningAlgId": "Permit-unless-deny",
+  "target": {
+    "anyOf": [
+      {
+        "allOf": {
+          "Action": "edit_document"
+        }
+      }
+    ]
+  },
+  "rules": [
+    {
+      "description": "Access only for manager",
+      "effect": "Permit",
+      "condition": {
+        "apply": {
+          "functionId": "string-equal",
+          "expression": [
+            {
+              "AttributeDesignator": "Subject.role"
+            },
+            {
+              "AttributeValue": "Manager"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

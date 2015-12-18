@@ -1,0 +1,33 @@
+{
+  "id": 3,
+  "description": "Policy <Edit document>",
+  "ruleCombiningAlgId": "Permit-unless-deny",
+  "target": {
+    "anyOf": [
+      {
+        "allOf": {
+          "Action": "edit_document"
+        }
+      }
+    ]
+  },
+  "rules": [
+    {
+      "description": "Document owner is subject",
+      "effect": "Permit",
+      "condition": {
+        "apply": {
+          "functionId": "string-equal",
+          "expression": [
+            {
+              "AttributeDesignator": "Resource.owner_id"
+            },
+            {
+              "AttributeDesignator": "Subject.id"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

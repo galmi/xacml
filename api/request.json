@@ -1,0 +1,14 @@
+{
+  "attributes": {
+    "Subject": {
+      "id": "<user_id>",
+      "role": "<user_role>"
+    },
+    "Resource": {
+      "type": "<object type>",
+      "id": "<object_id>"
+    },
+    "Action": "action_name",
+    "Environment": {}
+  }
+}

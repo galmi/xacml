@@ -1,0 +1,23 @@
+{
+  "id": "<policy_id>",
+  "description": "<policy description>",
+  "version": 1,
+  "ruleCombiningAlgId": "<algorithm_id>",
+  "target": {
+    "anyOf": [
+      {
+        "allOf": {
+          "<attribute_id1>": "<attribute_value>",
+          "<attribute_id2>": "<attribute_value>"
+        }
+      },
+      {
+        "allOf": {
+          "<attribute_id1>": "<attribute_value>",
+          "<attribute_id2>": "<attribute_value>"
+        }
+      }
+    ]
+  },
+  "rules": []
+}

@@ -1,0 +1,12 @@
+{
+  "decision": "Permit",
+  "status": {
+    "code": "<status code>",
+    "message": "<status message>",
+    "details": "<status details>"
+  },
+  "attributes": {
+    "<attribute_id>": "<attribute_value>"
+  },
+  "policyIdentifierList": []
+}

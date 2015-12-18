@@ -1,0 +1,20 @@
+{
+  "id": 1,
+  "description": "Access only in working time",
+  "ruleCombiningAlgId": "Permit-unless-deny",
+  "rules": [
+    {
+      "description": "Access only in working time",
+      "effect": "Permit",
+      "target": {
+        "anyOf": [
+          {
+            "allOf": {
+              "Environment.time": "WORKING_TIME"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

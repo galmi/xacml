@@ -1,0 +1,50 @@
+{
+  "id": "<rule_id>",
+  "description": "<rule_description>",
+  "effect": "<Permit|Deny>",
+  "target": {
+    "anyOf": [
+      {
+        "allOf": [
+          {
+            "match": {
+              "<attribute_id1>": "<attribute_value>"
+            }
+          },
+          {
+            "match": {
+              "<attribute_id2>": "<attribute_value>"
+            }
+          }
+        ]
+      },
+      {
+        "allOf": [
+          {
+            "match": {
+              "<attribute_id1>": "<attribute_value>"
+            }
+          },
+          {
+            "match": {
+              "<attribute_id2>": "<attribute_value>"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "condition": {
+    "apply": {
+      "functionId": "<function_id>",
+      "expression": [
+        {
+          "AttributeDesignator": "<attribute_id>"
+        },
+        {
+          "AttributeValue": "<attribute_value>"
+        }
+      ]
+    }
+  }
+}

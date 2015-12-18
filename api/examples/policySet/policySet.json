@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "description": "Document actions",
+  "ruleCombiningAlgId": "Permit-two-overrides",
+  "target": {
+    "anyOf": [
+      {
+        "allOf": {
+          "Resource.type": "document"
+        }
+      }
+    ]
+  },
+  "policyIdReference": [1, 2, 3, 4]
+}

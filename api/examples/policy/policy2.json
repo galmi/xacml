@@ -1,0 +1,47 @@
+{
+  "id": 1,
+  "description": "Policy <Edit document>",
+  "ruleCombiningAlgId": "Permit-unless-deny",
+  "target": {
+    "anyOf": [
+      {
+        "allOf": {
+          "Action": "edit_document",
+          "Resource.type": "document"
+        }
+      }
+    ]
+  },
+  "rules": [
+    {
+      "description": "Document owner is subject",
+      "effect": "Permit",
+      "condition": {
+        "apply": {
+          "functionId": "string-equal",
+          "expression": [
+            {
+              "AttributeDesignator": "Resource.owner_id"
+            },
+            {
+              "AttributeDesignator": "Subject.id"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "description": "Access only in working time",
+      "effect": "Permit",
+      "target": {
+        "anyOf": [
+          {
+            "allOf": {
+              "Environment.time": "WORKING_TIME"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

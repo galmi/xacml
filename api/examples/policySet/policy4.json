@@ -1,0 +1,33 @@
+{
+  "id": 4,
+  "description": "Policy <Delete document>",
+  "ruleCombiningAlgId": "Permit-unless-deny",
+  "target": {
+    "anyOf": [
+      {
+        "allOf": {
+          "Action": "edit_document"
+        }
+      }
+    ]
+  },
+  "rules": [
+    {
+      "description": "Access only for senior manager",
+      "effect": "Permit",
+      "condition": {
+        "apply": {
+          "functionId": "string-equal",
+          "expression": [
+            {
+              "AttributeDesignator": "Resource.position"
+            },
+            {
+              "AttributeValue": "Senior manager"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
