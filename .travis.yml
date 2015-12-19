@@ -16,9 +16,17 @@ matrix:
     - php: nightly
   allow_failures:
     - php: hhvm
+    - php: nightly
 
 install:
   - composer install
 
 script:
   - phpunit
+
+addons:
+  code_climate:
+    repo_token: 95ab52f0b325650c1f4c41adc8a3095c1231641b4db94801c9dd7e591f134e71
+
+after_script:
+  - vendor/bin/test-reporter
