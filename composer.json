@@ -17,7 +17,7 @@
   },
   "require-dev": {
     "phpunit/phpunit": "4.8.*",
-    "codeclimate/php-test-reporter": "master"
+    "codeclimate/php-test-reporter": "^0.2.0"
   },
   "autoload" : {
     "psr-4" : {
