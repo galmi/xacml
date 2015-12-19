@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ildar
- * Date: 15.12.15
- * Time: 0:13
- */
 
 namespace Galmi\Xacml;
 
 
-class TargetAnyOf implements TargetInterface
+class TargetAnyOf implements Evaluable
 {
     /**
      * @var TargetAllOf[]
@@ -50,6 +44,7 @@ class TargetAnyOf implements TargetInterface
             }
 
             unset($this->targetAllOf[$key]);
+            $this->targetAllOf = array_values($this->targetAllOf);
         }
 
         return $this;
@@ -64,30 +59,30 @@ class TargetAnyOf implements TargetInterface
      * | All “No match”                                | “No match”      |
      *  -----------------------------------------------------------------
      *
-     * @return MatchEnum
+     * @return string
      */
-    public function evaluate()
+    public function evaluate(Request $request)
     {
         if (count($this->getTargetAllOf()) == 0) {
-            return new MatchEnum(MatchEnum::INDETERMINATE);
+            return Match::INDETERMINATE;
         }
         $hasIndeterminate = false;
         /** @var TargetAllOf $target */
         foreach ($this->getTargetAllOf() as $target) {
-            $targetEvaluate = $target->evaluate();
-            if ($targetEvaluate == MatchEnum::MATCH) {
-                return new MatchEnum(MatchEnum::MATCH);
+            $targetEvaluate = $target->evaluate($request);
+            if ($targetEvaluate == Match::MATCH) {
+                return Match::MATCH;
             } else {
-                if ($targetEvaluate == MatchEnum::INDETERMINATE) {
+                if ($targetEvaluate == Match::INDETERMINATE) {
                     $hasIndeterminate = true;
                 }
             }
         }
 
         if ($hasIndeterminate) {
-            return new MatchEnum(MatchEnum::INDETERMINATE);
+            return Match::INDETERMINATE;
         }
 
-        return new MatchEnum(MatchEnum::NOT_MATCH);
+        return Match::NOT_MATCH;
     }
 }

@@ -3,7 +3,7 @@
 namespace Galmi\Xacml;
 
 
-use Galmi\Xacml\Policy\CombiningAlghoritm;
+use Galmi\Xacml\Algorithm\CombiningAlgorithm;
 
 class Policy
 {
@@ -38,9 +38,9 @@ class Policy
     /**
      * The procedure for combining decisions from multiple rules
      *
-     * @var CombiningAlghoritm
+     * @var CombiningAlgorithm
      */
-    protected $combiningAlghoritm;
+    protected $combiningAlgorithm;
 
     /**
      * @return number
@@ -91,19 +91,19 @@ class Policy
     }
 
     /**
-     * @return CombiningAlghoritm
+     * @return CombiningAlgorithm
      */
     public function getCombiningAlghoritm()
     {
-        return $this->combiningAlghoritm;
+        return $this->combiningAlgorithm;
     }
 
     /**
-     * @param CombiningAlghoritm $combiningAlghoritm
+     * @param CombiningAlgorithm $combiningAlgorithm
      */
-    public function setCombiningAlghoritm($combiningAlghoritm)
+    public function setCombiningAlghoritm($combiningAlgorithm)
     {
-        $this->combiningAlghoritm = $combiningAlghoritm;
+        $this->combiningAlgorithm = $combiningAlgorithm;
     }
 
     /**

@@ -3,12 +3,12 @@
 namespace Galmi\Xacml;
 
 
-class Target implements TargetInterface
+class Target implements Evaluable
 {
     /**
      * @var TargetAnyOf[]
      */
-    protected $targetAnyOf;
+    protected $targetAnyOf = array();
 
     /**
      * @return TargetAnyOf[]
@@ -44,6 +44,7 @@ class Target implements TargetInterface
             }
 
             unset($this->targetAnyOf[$key]);
+            $this->targetAnyOf = array_values($this->targetAnyOf);
         }
 
         return $this;
@@ -59,22 +60,22 @@ class Target implements TargetInterface
      * | Otherwise               | “Indeterminate” |
      *  -------------------------------------------
      *
-     * @return MatchEnum
+     * @return string
      */
-    public function evaluate()
+    public function evaluate(Request $request)
     {
         if (count($this->getTargetAnyOf()) == 0) {
-            return new MatchEnum(MatchEnum::MATCH);
+            return Match::MATCH;
         }
         /** @var TargetAnyOf $target */
         foreach ($this->getTargetAnyOf() as $target) {
-            $targetEvaluate = $target->evaluate();
-            if ($targetEvaluate == MatchEnum::NOT_MATCH) {
-                return new MatchEnum(MatchEnum::NOT_MATCH);
-            } else if ($targetEvaluate == MatchEnum::INDETERMINATE) {
-                return new MatchEnum(MatchEnum::INDETERMINATE);
+            $targetEvaluate = $target->evaluate($request);
+            if ($targetEvaluate == Match::NOT_MATCH) {
+                return Match::NOT_MATCH;
+            } else if ($targetEvaluate == Match::INDETERMINATE) {
+                return Match::INDETERMINATE;
             }
         }
-        return new MatchEnum(MatchEnum::MATCH);
+        return Match::MATCH;
     }
 }

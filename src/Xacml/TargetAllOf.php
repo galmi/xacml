@@ -3,7 +3,7 @@
 namespace Galmi\Xacml;
 
 
-class TargetAllOf implements TargetInterface
+class TargetAllOf implements Evaluable
 {
     /**
      * @var Match[]
@@ -44,6 +44,7 @@ class TargetAllOf implements TargetInterface
             }
 
             unset($this->matches[$key]);
+            $this->matches = array_values($this->matches);
         }
 
         return $this;
@@ -58,28 +59,28 @@ class TargetAllOf implements TargetInterface
      * | At least one “False”                        | “No match”      |
      *  ---------------------------------------------------------------
      *
-     * @return MatchEnum
+     * @return string
      */
-    public function evaluate()
+    public function evaluate(Request $request)
     {
         if (count($this->getMatches()) == 0) {
-            return new MatchEnum(MatchEnum::INDETERMINATE);
+            return Match::INDETERMINATE;
         }
         $hasIndeterminate = false;
         /** @var Match $match */
         foreach($this->getMatches() as $match) {
             try {
-                $matchEvaluate = $match->evaluate();
+                $matchEvaluate = $match->evaluate($request);
                 if (!$matchEvaluate) {
-                    return new MatchEnum(MatchEnum::NOT_MATCH);
+                    return Match::NOT_MATCH;
                 }
             } catch (\Exception $e) {
                 $hasIndeterminate = true;
             }
         }
         if ($hasIndeterminate) {
-            return new MatchEnum(MatchEnum::INDETERMINATE);
+            return Match::INDETERMINATE;
         }
-        return new MatchEnum(MatchEnum::MATCH);
+        return Match::MATCH;
     }
 }

@@ -133,7 +133,7 @@ class Rule
         $decision = new DecisionEnum(DecisionEnum::NOT_APPLICABLE);
         try {
             if ($this->getTarget() == null || $this->getTarget()->evaluate()) {
-                if ($this->getCondition()->evaluate()) {
+                if ($this->getCondition() == null || $this->getCondition()->evaluate()) {
                     $decision = $this->getEffect();
                 }
             }
