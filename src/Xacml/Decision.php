@@ -3,11 +3,11 @@
 namespace Galmi\Xacml;
 
 /**
- * Class DecisionEnum
  * The result of evaluating a rule, policy or policy set
- * @package Galmi\Xacml
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
  */
-class DecisionEnum extends \SplEnum
+class Decision
 {
     const PERMIT = 'Permit';
     const DENY = 'Deny';

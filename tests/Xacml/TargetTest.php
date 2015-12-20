@@ -283,6 +283,8 @@ class TargetTest extends \PHPUnit_Framework_TestCase
      * Subject.role == Array()
      *
      * Result = Indeterminate
+     *
+     * @expectedException \Galmi\Xacml\Exception\IndeterminateException
      */
     public function testEvaluate8()
     {

@@ -31,6 +31,9 @@ class TargetAllOfTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($target, $target->removeMatch($match1), 'Remove not existed item will return this');
     }
 
+    /**
+     * @expectedException \Galmi\Xacml\Exception\IndeterminateException
+     */
     public function testEvaluate()
     {
         $request = new \Galmi\Xacml\Request();

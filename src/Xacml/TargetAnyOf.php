@@ -3,6 +3,8 @@
 namespace Galmi\Xacml;
 
 
+use Galmi\Xacml\Exception\IndeterminateException;
+
 class TargetAnyOf implements Evaluable
 {
     /**
@@ -59,28 +61,30 @@ class TargetAnyOf implements Evaluable
      * | All “No match”                                | “No match”      |
      *  -----------------------------------------------------------------
      *
+     * @param Request $request
      * @return string
+     * @throws IndeterminateException
      */
     public function evaluate(Request $request)
     {
         if (count($this->getTargetAllOf()) == 0) {
-            return Match::INDETERMINATE;
+            throw new IndeterminateException();
         }
         $hasIndeterminate = false;
         /** @var TargetAllOf $target */
         foreach ($this->getTargetAllOf() as $target) {
-            $targetEvaluate = $target->evaluate($request);
-            if ($targetEvaluate == Match::MATCH) {
-                return Match::MATCH;
-            } else {
-                if ($targetEvaluate == Match::INDETERMINATE) {
-                    $hasIndeterminate = true;
+            try {
+                $targetEvaluate = $target->evaluate($request);
+                if ($targetEvaluate == Match::MATCH) {
+                    return Match::MATCH;
                 }
+            } catch (\Exception $e) {
+                $hasIndeterminate = true;
             }
         }
 
         if ($hasIndeterminate) {
-            return Match::INDETERMINATE;
+            throw new IndeterminateException();
         }
 
         return Match::NOT_MATCH;

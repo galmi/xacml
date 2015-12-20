@@ -9,46 +9,59 @@ class Rule
     protected $id;
 
     /**
-     * The intended consequence of a satisfied rule (either "Permit" or "Deny")
+     * Rule effect.  The value of this attribute is either “Permit” or “Deny”.
      *
-     * @var DecisionEnum
+     * @var string
      */
     protected $effect;
 
     /**
+     * A free-form description of the rule.
+     *
      * @var string
      */
     protected $description;
 
     /**
-     * The set of decision requests, identified by definitions for resource, subject and action
-     * that a rule, policy, or policy set is intended to evaluate
+     * Identifies the set of decision requests that the <Rule> class is intended to evaluate.
      *
      * @var Target
      */
     protected $target = null;
 
     /**
-     * An expression of predicates.  A function that evaluates to "True", "False" or “Indeterminate”
+     * A predicate that MUST be satisfied for the rule to be assigned its Effect value.
      *
-     * @var Condition
+     * @var Expression
      */
-    protected $condition;
+    protected $condition = null;
 
     /**
-     * An operation specified in a rule, policy or policy set that should be performed by the PEP
-     * in conjunction with the enforcement of an authorization decision
+     * A conjunctive sequence of obligation expressions which MUST be evaluated into obligations byt the PDP.
      *
      * @var array
      */
     protected $obligationExpressions;
 
     /**
-     * A supplementary piece of information in a policy or policy set which is provided to the PEP with the decision of the PDP.
+     * A conjunctive sequence of advice expressions which MUST evaluated into advice by the PDP.
      *
      * @var array
      */
     protected $adviceExpressions;
+
+    /**
+     * Rule constructor.
+     * @param string $effect
+     * @param Target|null $target
+     * @param Expression|null $condition
+     */
+    public function __construct($effect, $target = null, $condition = null)
+    {
+        $this->effect = $effect;
+        $this->target = $target;
+        $this->condition = $condition;
+    }
 
     /**
      * @return string
@@ -70,7 +83,7 @@ class Rule
     }
 
     /**
-     * @return DecisionEnum
+     * @return string
      */
     public function getEffect()
     {
@@ -78,7 +91,7 @@ class Rule
     }
 
     /**
-     * @param DecisionEnum $effect
+     * @param string $effect
      * @return $this
      */
     public function setEffect($effect)
@@ -108,7 +121,7 @@ class Rule
     }
 
     /**
-     * @return Condition
+     * @return Expression
      */
     public function getCondition()
     {
@@ -116,7 +129,7 @@ class Rule
     }
 
     /**
-     * @param Condition $condition
+     * @param Expression $condition
      */
     public function setCondition($condition)
     {
@@ -126,22 +139,23 @@ class Rule
     /**
      * Evaluation rule
      *
-     * @return DecisionEnum
+     * @param Request $request
+     * @return string
      */
-    public function evaluation()
+    public function evaluation(Request $request)
     {
-        $decision = new DecisionEnum(DecisionEnum::NOT_APPLICABLE);
+        $decision = Decision::NOT_APPLICABLE;
         try {
-            if ($this->getTarget() == null || $this->getTarget()->evaluate()) {
-                if ($this->getCondition() == null || $this->getCondition()->evaluate()) {
+            if ($this->getTarget() == null || $this->getTarget()->evaluate($request) === true) {
+                if ($this->getCondition() == null || $this->getCondition()->evaluate($request) === true) {
                     $decision = $this->getEffect();
                 }
             }
         } catch (\Exception $e) {
-            if ($this->getEffect() == DecisionEnum::PERMIT) {
-                $decision = new DecisionEnum(DecisionEnum::INDETERMINATE_P);
+            if ($this->getEffect() == Decision::PERMIT) {
+                $decision = Decision::INDETERMINATE_P;
             } else {
-                $decision = new DecisionEnum(DecisionEnum::INDETERMINATE_D);
+                $decision = Decision::INDETERMINATE_D;
             }
         }
         return $decision;

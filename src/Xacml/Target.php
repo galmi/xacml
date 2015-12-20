@@ -60,7 +60,9 @@ class Target implements Evaluable
      * | Otherwise               | “Indeterminate” |
      *  -------------------------------------------
      *
+     * @param Request $request
      * @return string
+     * @throws Exception\IndeterminateException
      */
     public function evaluate(Request $request)
     {
@@ -72,8 +74,6 @@ class Target implements Evaluable
             $targetEvaluate = $target->evaluate($request);
             if ($targetEvaluate == Match::NOT_MATCH) {
                 return Match::NOT_MATCH;
-            } else if ($targetEvaluate == Match::INDETERMINATE) {
-                return Match::INDETERMINATE;
             }
         }
         return Match::MATCH;
