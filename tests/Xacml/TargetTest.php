@@ -30,6 +30,8 @@ class TargetTest extends \PHPUnit_Framework_TestCase
 
         $target->removeTargetAnyOf($anyOf1);
         $this->assertEquals([$anyOf2], $target->getTargetAnyOf(), 'One item array of AnyOf2');
+
+        $this->assertEquals($target, $target->removeTargetAnyOf($anyOf1), 'Remove not existed item will return this');
     }
 
     protected function createRequest()

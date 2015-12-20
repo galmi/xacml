@@ -27,5 +27,7 @@ class TargetAllOfTest extends \PHPUnit_Framework_TestCase
 
         $target->removeMatch($match1);
         $this->assertEquals([$match2], $target->getMatches(), 'One items array of Match');
+
+        $this->assertEquals($target, $target->removeMatch($match1), 'Remove not existed item will return this');
     }
 }

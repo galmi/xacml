@@ -30,5 +30,7 @@ class TargetAnyOfTest extends PHPUnit_Framework_TestCase
 
         $target->removeTargetAllOf($allOf1);
         $this->assertEquals([$allOf2], $target->getTargetAllOf(), 'One item array of AllOf2');
+
+        $this->assertEquals($target, $target->removeTargetAllOf($allOf1), 'Remove not existed item will return this');
     }
 }
