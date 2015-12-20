@@ -274,4 +274,35 @@ class TargetTest extends \PHPUnit_Framework_TestCase
         $target->addTargetAnyOf($anyOf);
         $this->assertEquals(\Galmi\Xacml\Match::MATCH, $target->evaluate($request), 'Test 7 is Match');
     }
+
+    /**
+     * Test 8
+     *
+     * Subject.role == Array()
+     *
+     * Result = Indeterminate
+     */
+    public function testEvaluate8()
+    {
+        $request = $this->createRequest();
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_DESIGNATOR, $this->createAttributeDesignator());
+
+        $matchMock = $this->getMockBuilder('\Galmi\Xacml\Match')
+            ->setConstructorArgs(array('Subject.role', 'Manager'))
+            ->getMock();
+        $matchMock->method('evaluate')
+            ->will(
+                $this->returnCallback(function() {
+                    throw new \Exception('test exception');
+                })
+            );
+        $allOf = new \Galmi\Xacml\TargetAllOf();
+        $allOf->addMatch($matchMock);
+        $anyOf = new \Galmi\Xacml\TargetAnyOf();
+        $anyOf->addTargetAllOf($allOf);
+        $target = new \Galmi\Xacml\Target();
+        $target->addTargetAnyOf($anyOf);
+        $this->assertEquals(\Galmi\Xacml\Match::INDETERMINATE, $target->evaluate($request), 'Test 8 is Indeterminate');
+    }
+
 }
