@@ -36,12 +36,4 @@ class Request
         return null;
     }
 
-    /**
-     * @return array
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-
 }

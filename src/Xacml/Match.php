@@ -35,7 +35,8 @@ class Match implements Evaluable
     }
 
     /**
-     * @return boolean
+     * @param Request $request
+     * @return bool
      */
     public function evaluate(Request $request)
     {

@@ -3,8 +3,7 @@
 namespace Galmi\Xacml;
 
 
-
-class Rule
+class Rule implements Evaluable
 {
     protected $id;
 
@@ -91,17 +90,6 @@ class Rule
     }
 
     /**
-     * @param string $effect
-     * @return $this
-     */
-    public function setEffect($effect)
-    {
-        $this->effect = $effect;
-
-        return $this;
-    }
-
-    /**
      * @return Target
      */
     public function getTarget()
@@ -137,16 +125,26 @@ class Rule
     }
 
     /**
-     * Evaluation rule
+     *  -----------------------------------------------------------------------------------------
+     * |       Target         |    Condition    |               Rule Value                       |
+     *  -----------------------------------------------------------------------------------------
+     * | “Match” or no target | “True”          | Effect                                         |
+     * | “Match” or no target | “False”         | “NotApplicable”                                |
+     * | “Match” or no target | “Indeterminate” | “Indeterminate{P}” if the Effect is Permit,    |
+     * |                      |                 |    or “Indeterminate{D}” if the Effect is Deny |
+     * | “No-match”           | Don’t care      | “NotApplicable”                                |
+     * | “Indeterminate”      | Don’t care      | “Indeterminate{P}” if the Effect is Permit,    |
+     * |                      |                 | or “Indeterminate{D}” if the Effect is Deny    |
+     *  -----------------------------------------------------------------------------------------
      *
      * @param Request $request
      * @return string
      */
-    public function evaluation(Request $request)
+    public function evaluate(Request $request)
     {
         $decision = Decision::NOT_APPLICABLE;
         try {
-            if ($this->getTarget() == null || $this->getTarget()->evaluate($request) === true) {
+            if ($this->getTarget() == null || $this->getTarget()->evaluate($request) === Match::MATCH) {
                 if ($this->getCondition() == null || $this->getCondition()->evaluate($request) === true) {
                     $decision = $this->getEffect();
                 }
