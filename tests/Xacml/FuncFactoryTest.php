@@ -13,16 +13,23 @@ class FuncFactoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Equal', $camelCase->invokeArgs($func, array('equal')));
     }
 
-    /**
-     * @expectedException \Galmi\Xacml\Exception\FunctionNotFoundException
-     */
     public function testGetFunction()
     {
         $func = new \Galmi\Xacml\FuncFactory();
 
         $this->assertInstanceOf('\\Galmi\\Xacml\\Func\\FuncInterface', $func->getFunction('string-equal'));
+    }
 
-        $this->assertInstanceOf('\\Galmi\\Xacml\\Func\\FuncInterface', $func->getFunction('wrong-class'), 'FunctionNotFoundException');
+    /**
+     * @expectedException \Galmi\Xacml\Exception\FunctionNotFoundException
+     */
+    public function testGetFunctionException()
+    {
+        $func = new \Galmi\Xacml\FuncFactory();
+
+        $this->assertInstanceOf('\\Galmi\\Xacml\\Func\\FuncInterface',
+            $func->getFunction('wrong-class'),
+            'FunctionNotFoundException');
     }
 
     protected function getMethod($name) {
