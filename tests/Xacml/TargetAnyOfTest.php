@@ -33,4 +33,11 @@ class TargetAnyOfTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($target, $target->removeTargetAllOf($allOf1), 'Remove not existed item will return this');
     }
+
+    public function testEvaluate()
+    {
+        $request = new \Galmi\Xacml\Request();
+        $target = new \Galmi\Xacml\TargetAnyOf();
+        $this->assertEquals(\Galmi\Xacml\Match::INDETERMINATE, $target->evaluate($request));
+    }
 }

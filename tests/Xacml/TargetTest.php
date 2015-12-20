@@ -45,7 +45,7 @@ class TargetTest extends \PHPUnit_Framework_TestCase
         return $request;
     }
 
-    protected function createAttributeDesignator()
+    protected function createAttributeFinder()
     {
         $attributeDesignator = $this->getMockBuilder('stdClass')
             ->setMethods(['getValue'])
@@ -76,7 +76,7 @@ class TargetTest extends \PHPUnit_Framework_TestCase
     public function testEvaluate1()
     {
         $request = $this->createRequest();
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_DESIGNATOR, $this->createAttributeDesignator());
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_FINDER, $this->createAttributeFinder());
 
         $target = new \Galmi\Xacml\Target();
         $this->assertEquals(\Galmi\Xacml\Match::MATCH, $target->evaluate($request), 'Empty target return Match');
@@ -92,7 +92,7 @@ class TargetTest extends \PHPUnit_Framework_TestCase
     public function testEvaluate2()
     {
         $request = $this->createRequest();
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_DESIGNATOR, $this->createAttributeDesignator());
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_FINDER, $this->createAttributeFinder());
 
         $matchRole = new \Galmi\Xacml\Match('Subject.role', 'Manager');
         $allOf = new \Galmi\Xacml\TargetAllOf();
@@ -114,7 +114,7 @@ class TargetTest extends \PHPUnit_Framework_TestCase
     public function testEvaluate3()
     {
         $request = $this->createRequest();
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_DESIGNATOR, $this->createAttributeDesignator());
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_FINDER, $this->createAttributeFinder());
 
         $matchRole = new \Galmi\Xacml\Match('Subject.role', 'Guest');
         $allOf = new \Galmi\Xacml\TargetAllOf();
@@ -138,7 +138,7 @@ class TargetTest extends \PHPUnit_Framework_TestCase
     public function testEvaluate4()
     {
         $request = $this->createRequest();
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_DESIGNATOR, $this->createAttributeDesignator());
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_FINDER, $this->createAttributeFinder());
 
         $matchRole = new \Galmi\Xacml\Match('Subject.role', 'Manager');
         $matchObject = new \Galmi\Xacml\Match('Object.type', 'Document');
@@ -172,7 +172,7 @@ class TargetTest extends \PHPUnit_Framework_TestCase
     public function testEvaluate5()
     {
         $request = $this->createRequest();
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_DESIGNATOR, $this->createAttributeDesignator());
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_FINDER, $this->createAttributeFinder());
 
         $matchTime = new \Galmi\Xacml\Match('WorkingTime', true);
         $matchRole = new \Galmi\Xacml\Match('Subject.role', 'Manager');
@@ -215,7 +215,7 @@ class TargetTest extends \PHPUnit_Framework_TestCase
     public function testEvaluate6()
     {
         $request = $this->createRequest();
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_DESIGNATOR, $this->createAttributeDesignator());
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_FINDER, $this->createAttributeFinder());
 
         $matchTime = new \Galmi\Xacml\Match('WorkingTime', true);
         $matchRole = new \Galmi\Xacml\Match('Subject.role', 'Guest');
@@ -255,7 +255,7 @@ class TargetTest extends \PHPUnit_Framework_TestCase
     public function testEvaluate7()
     {
         $request = $this->createRequest();
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_DESIGNATOR, $this->createAttributeDesignator());
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_FINDER, $this->createAttributeFinder());
 
         $matchRole = new \Galmi\Xacml\Match('Subject.role', 'Guest');
         $matchObject = new \Galmi\Xacml\Match('Object.type', 'Document');
@@ -287,7 +287,7 @@ class TargetTest extends \PHPUnit_Framework_TestCase
     public function testEvaluate8()
     {
         $request = $this->createRequest();
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_DESIGNATOR, $this->createAttributeDesignator());
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_FINDER, $this->createAttributeFinder());
 
         $matchMock = $this->getMockBuilder('\Galmi\Xacml\Match')
             ->setConstructorArgs(array('Subject.role', 'Manager'))

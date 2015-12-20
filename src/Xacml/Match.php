@@ -3,6 +3,8 @@
 namespace Galmi\Xacml;
 
 
+use Galmi\Xacml\Expression\AttributeDesignator;
+
 class Match implements Evaluable
 {
     const MATCH = 'Match';
@@ -17,25 +19,19 @@ class Match implements Evaluable
     protected $attributeValue;
 
     /**
-     * @var string
-     */
-    protected $attributeId;
-
-    /**
      * @var AttributeDesignator
      */
     protected $attributeDesignator;
 
     /**
      * Match constructor.
-     * @param $attributeId
-     * @param $expectedAttributeValue
+     * @param string $attributeId
+     * @param mixed $expectedAttributeValue
      */
     public function __construct($attributeId, $expectedAttributeValue)
     {
-        $this->attributeId = $attributeId;
         $this->attributeValue = $expectedAttributeValue;
-        $this->attributeDesignator = Config::get('AttributeDesignator');
+        $this->attributeDesignator = new AttributeDesignator($attributeId);
     }
 
     /**
@@ -43,31 +39,7 @@ class Match implements Evaluable
      */
     public function evaluate(Request $request)
     {
-        $attributeDesignateValue = $this->getAttributeDesignator()->getValue($request, $this->getAttributeId());
-        return $attributeDesignateValue === $this->getAttributeValue();
-    }
-
-    /**
-     * @return AttributeDesignator
-     */
-    public function getAttributeDesignator()
-    {
-        return $this->attributeDesignator;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAttributeId()
-    {
-        return $this->attributeId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAttributeValue()
-    {
-        return $this->attributeValue;
+        $attributeDesignateValue = $this->attributeDesignator->evaluate($request);
+        return $attributeDesignateValue === $this->attributeValue;
     }
 }

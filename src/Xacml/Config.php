@@ -6,7 +6,7 @@ namespace Galmi\Xacml;
 class Config
 {
 
-    const ATTRIBUTE_DESIGNATOR = 'AttributeDesignator';
+    const ATTRIBUTE_FINDER = 'AttributeFinder';
 
     protected static $config = array();
 
