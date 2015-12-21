@@ -54,8 +54,7 @@ class AttributeDesignator extends Expression
     /**
      * Retrieve attributeId value using AttributeFinder
      *
-     * @param Request $request
-     * @return mixed
+     * @inheritdoc
      */
     public function evaluate(Request $request)
     {

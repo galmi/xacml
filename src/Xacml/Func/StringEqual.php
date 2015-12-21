@@ -1,24 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ildar
- * Date: 20.12.15
- * Time: 17:26
- */
 
 namespace Galmi\Xacml\Func;
 
-
+/**
+ * Return True if two strings are equals
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
+ */
 class StringEqual implements FuncInterface
 {
     /**
-     * @param array $values
-     * @return bool
+     * @inheritdoc
      */
     public function evaluate(array $values)
     {
         if (count($values) != 2) {
-            throw new \InvalidArgumentException('StringEqual must contains only 2 parameters');
+            throw new \InvalidArgumentException('StringEqual function must contains only 2 parameters');
         }
         return $values[0] == $values[1];
     }

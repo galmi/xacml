@@ -39,6 +39,7 @@ class Apply extends Expression
     /**
      * Apply constructor.
      * @param string $functionId
+     * @param string $description
      */
     public function __construct($functionId, $description = '')
     {
@@ -47,6 +48,8 @@ class Apply extends Expression
     }
 
     /**
+     * Getter for Expression
+     *
      * @return Expression[]|[]
      */
     public function getExpressions()
@@ -55,6 +58,8 @@ class Apply extends Expression
     }
 
     /**
+     * Add Expression
+     *
      * @param Expression $expression
      * @return $this
      */
@@ -68,6 +73,8 @@ class Apply extends Expression
     }
 
     /**
+     * Remove Expression
+     *
      * @param Expression $expression
      * @return $this|bool
      */
@@ -87,8 +94,7 @@ class Apply extends Expression
     }
 
     /**
-     * @param Request $request
-     * @return mixed
+     * @inheritdoc
      */
     public function evaluate(Request $request)
     {

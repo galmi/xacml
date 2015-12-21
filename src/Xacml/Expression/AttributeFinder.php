@@ -1,19 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ildar
- * Date: 20.12.15
- * Time: 16:12
- */
 
 namespace Galmi\Xacml\Expression;
 
 
 use Galmi\Xacml\Request;
 
+/**
+ * PIP Class Interface for search value of attributeId
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
+ */
 interface AttributeFinder
 {
     /**
+     * Retrieve value by attributeId from request context
+     *
      * @param Request $request
      * @param string $attributeId
      * @return mixed

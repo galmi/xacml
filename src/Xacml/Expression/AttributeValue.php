@@ -1,11 +1,5 @@
 <?php
 
-/*
- * This file is part of the Xacml package.
- *
- * (c) Ildar Galiautdinov <ildar@galmi.ru>
- */
-
 namespace Galmi\Xacml\Expression;
 
 use Galmi\Xacml\Expression;
@@ -35,8 +29,7 @@ class AttributeValue extends Expression
     /**
      * Return $value
      *
-     * @param Request $request
-     * @return mixed
+     * @inheritdoc
      */
     public function evaluate(Request $request)
     {

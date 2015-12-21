@@ -1,20 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ildar
- * Date: 20.12.15
- * Time: 22:21
- */
 
 namespace Galmi\Xacml\Func;
 
-
+/**
+ * Making AND operation for boolean type values
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
+ */
 class FuncAnd implements FuncInterface
 {
 
     /**
-     * @param array $values
-     * @return mixed
+     * @inheritdoc
      */
     public function evaluate(array $values)
     {
