@@ -3,16 +3,24 @@
 namespace Galmi\Xacml;
 
 
-use Galmi\Xacml\Exception\IndeterminateException;
-
+/**
+ * The <AllOf> class SHALL contain a conjunctive sequence of <Match> classes.
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
+ */
 class TargetAllOf implements Evaluable
 {
     /**
+     * A conjunctive sequence of individual matches of the attributes in the request context
+     * and the embedded attribute values.
+     *
      * @var Match[]
      */
     protected $matches = array();
 
     /**
+     * Getter for matches
+     *
      * @return Match[]
      */
     public function getMatches()
@@ -21,6 +29,8 @@ class TargetAllOf implements Evaluable
     }
 
     /**
+     * Add Match
+     *
      * @param Match $match
      * @return $this
      */
@@ -34,6 +44,8 @@ class TargetAllOf implements Evaluable
     }
 
     /**
+     * Remove Match
+     *
      * @param Match $match
      * @return $this
      */
@@ -61,14 +73,12 @@ class TargetAllOf implements Evaluable
      * | At least one “False”                        | “No match”      |
      *  ---------------------------------------------------------------
      *
-     * @param Request $request
-     * @return string
-     * @throws IndeterminateException
+     * @inheritdoc
      */
     public function evaluate(Request $request)
     {
         if (count($this->getMatches()) == 0) {
-            throw new IndeterminateException();
+            throw new Exception\IndeterminateException();
         }
         $hasIndeterminate = false;
         /** @var Match $match */
@@ -83,7 +93,7 @@ class TargetAllOf implements Evaluable
             }
         }
         if ($hasIndeterminate) {
-            throw new IndeterminateException();
+            throw new Exception\IndeterminateException();
         }
         return Match::MATCH;
     }

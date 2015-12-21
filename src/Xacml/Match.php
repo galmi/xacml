@@ -5,6 +5,12 @@ namespace Galmi\Xacml;
 
 use Galmi\Xacml\Expression\AttributeDesignator;
 
+/**
+ * The <Match> class SHALL identify a set of entities by matching attribute values
+ * of the request context with the embedded attribute value.
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
+ */
 class Match implements Evaluable
 {
     const MATCH = 'Match';
@@ -14,17 +20,22 @@ class Match implements Evaluable
     protected $id;
 
     /**
+     * Embedded attribute value.
+     *
      * @var mixed
      */
     protected $attributeValue;
 
     /**
+     * SHALL be used to identify one or more attribute values in an <Attributes> element of the request context.
+     *
      * @var AttributeDesignator
      */
     protected $attributeDesignator;
 
     /**
      * Match constructor.
+     *
      * @param string $attributeId
      * @param mixed $expectedAttributeValue
      */
@@ -35,8 +46,7 @@ class Match implements Evaluable
     }
 
     /**
-     * @param Request $request
-     * @return bool
+     * @inheritdoc
      */
     public function evaluate(Request $request)
     {

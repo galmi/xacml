@@ -3,16 +3,23 @@
 namespace Galmi\Xacml;
 
 
-use Galmi\Xacml\Exception\IndeterminateException;
-
+/**
+ * The <AnyOf> class SHALL contain a disjunctive sequence of <AllOf> classes.
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
+ */
 class TargetAnyOf implements Evaluable
 {
     /**
+     * <AllOf> [One to Many, Required]
+     *
      * @var TargetAllOf[]
      */
     protected $targetAllOf = array();
 
     /**
+     * Getter for TargetAllOf
+     *
      * @return TargetAllOf[]
      */
     public function getTargetAllOf()
@@ -21,6 +28,8 @@ class TargetAnyOf implements Evaluable
     }
 
     /**
+     * Add TargetAllOf
+     *
      * @param TargetAllOf $match
      * @return $this
      */
@@ -34,6 +43,8 @@ class TargetAnyOf implements Evaluable
     }
 
     /**
+     * Remove TargetAllOf
+     *
      * @param TargetAllOf $match
      * @return $this
      */
@@ -61,14 +72,12 @@ class TargetAnyOf implements Evaluable
      * | All “No match”                                | “No match”      |
      *  -----------------------------------------------------------------
      *
-     * @param Request $request
-     * @return string
-     * @throws IndeterminateException
+     * @inheritdoc
      */
     public function evaluate(Request $request)
     {
         if (count($this->getTargetAllOf()) == 0) {
-            throw new IndeterminateException();
+            throw new Exception\IndeterminateException();
         }
         $hasIndeterminate = false;
         /** @var TargetAllOf $target */
@@ -84,7 +93,7 @@ class TargetAnyOf implements Evaluable
         }
 
         if ($hasIndeterminate) {
-            throw new IndeterminateException();
+            throw new Exception\IndeterminateException();
         }
 
         return Match::NOT_MATCH;

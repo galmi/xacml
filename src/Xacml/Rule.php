@@ -2,7 +2,11 @@
 
 namespace Galmi\Xacml;
 
-
+/**
+ * The <Rule> class SHALL define the individual rules in the policy.
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
+ */
 class Rule implements Evaluable
 {
     protected $id;
@@ -63,6 +67,8 @@ class Rule implements Evaluable
     }
 
     /**
+     * Getter for description
+     *
      * @return string
      */
     public function getDescription()
@@ -71,6 +77,8 @@ class Rule implements Evaluable
     }
 
     /**
+     * Setter for description
+     *
      * @param string $description
      * @return $this
      */
@@ -82,6 +90,8 @@ class Rule implements Evaluable
     }
 
     /**
+     * Getter for effect
+     *
      * @return string
      */
     public function getEffect()
@@ -90,6 +100,7 @@ class Rule implements Evaluable
     }
 
     /**
+     * Setter for effect
      * @return Target
      */
     public function getTarget()
@@ -98,6 +109,8 @@ class Rule implements Evaluable
     }
 
     /**
+     * Setter for target
+     *
      * @param Target $target
      * @return $this
      */
@@ -109,6 +122,8 @@ class Rule implements Evaluable
     }
 
     /**
+     * Getter for condition
+     *
      * @return Expression
      */
     public function getCondition()
@@ -117,6 +132,8 @@ class Rule implements Evaluable
     }
 
     /**
+     * Setter for condition
+     *
      * @param Expression $condition
      */
     public function setCondition($condition)
@@ -137,8 +154,7 @@ class Rule implements Evaluable
      * |                      |                 | or “Indeterminate{D}” if the Effect is Deny    |
      *  -----------------------------------------------------------------------------------------
      *
-     * @param Request $request
-     * @return string
+     * @inheritdoc
      */
     public function evaluate(Request $request)
     {

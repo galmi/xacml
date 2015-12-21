@@ -1,21 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ildar
- * Date: 20.12.15
- * Time: 17:19
- */
 
 namespace Galmi\Xacml;
 
 
 use Galmi\Xacml\Func\FuncInterface;
 
+/**
+ * Factory class for retrieve function object from functionId
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
+ */
 class FuncFactory
 {
     /**
+     * Retrieve function object from functionId
+     *
      * @param $functionId
      * @return FuncInterface
+     * @throws Exception\FunctionNotFoundException
      */
     public function getFunction($functionId)
     {
@@ -27,18 +29,18 @@ class FuncFactory
     }
 
     /**
+     * Convert spec characters (e.g. "-", "_") to camel case
+     *
      * @param $str
-     * @param array $noStrip
-     * @return mixed|string
+     * @return string
      */
-    protected function camelCase($str, array $noStrip = [])
+    protected function camelCase($str)
     {
         // non-alpha and non-numeric characters become spaces
-        $str = preg_replace('/[^a-z0-9' . implode("", $noStrip) . ']+/i', ' ', $str);
+        $str = preg_replace('/[^a-z0-9]+/i', ' ', $str);
         $str = trim($str);
         // uppercase the first character of each word
         $str = ucwords($str);
-        $wordsCount = str_word_count($str);
         $str = str_replace(" ", "", $str);
 
         return $str;

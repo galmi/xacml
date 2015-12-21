@@ -2,15 +2,25 @@
 
 namespace Galmi\Xacml;
 
-
+/**
+ * The <Target> class identifies the set of decision requests that the parent element is intended to evaluate.
+ * The <Target> class SHALL appear as a child of a <PolicySet> and <Policy> class and MAY appear as a child of a <Rule> class.
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
+ */
 class Target implements Evaluable
 {
     /**
+     * Matching specification for attributes in the context.
+     * If this element is missing, then the target SHALL match all contexts.
+     *
      * @var TargetAnyOf[]
      */
     protected $targetAnyOf = array();
 
     /**
+     * Getter for targetAnyOf
+     *
      * @return TargetAnyOf[]
      */
     public function getTargetAnyOf()
@@ -19,6 +29,8 @@ class Target implements Evaluable
     }
 
     /**
+     * Add TargetAnyOf
+     *
      * @param TargetAnyOf $match
      * @return $this
      */
@@ -32,6 +44,8 @@ class Target implements Evaluable
     }
 
     /**
+     * Remove TargetAnyOf
+     *
      * @param TargetAnyOf $match
      * @return $this
      */
@@ -51,7 +65,6 @@ class Target implements Evaluable
     }
 
     /**
-     *
      *  -------------------------------------------
      * |     <AnyOf> values      |  Target value   |
      *  -------------------------------------------
@@ -60,9 +73,7 @@ class Target implements Evaluable
      * | Otherwise               | “Indeterminate” |
      *  -------------------------------------------
      *
-     * @param Request $request
-     * @return string
-     * @throws Exception\IndeterminateException
+     * @inheritdoc
      */
     public function evaluate(Request $request)
     {

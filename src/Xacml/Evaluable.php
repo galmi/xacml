@@ -2,13 +2,19 @@
 
 namespace Galmi\Xacml;
 
-
+/**
+ * Interface for evaluable classes
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
+ */
 interface Evaluable
 {
     /**
-     * Evaluation Target
+     * Evaluate value
      *
-     * @return string
+     * @param Request $request
+     * @return string|bool
+     * @throws Exception\IndeterminateException
      */
     public function evaluate(Request $request);
 }
