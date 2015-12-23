@@ -10,7 +10,7 @@ use Galmi\Xacml\Rule;
  *
  * @author Ildar Galiautdinov <ildar@galmi.ru>
  */
-interface CombiningAlgorithm
+interface CombiningAlgorithmInterface
 {
     /**
      * Evaluate decision of algorithm

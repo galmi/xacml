@@ -7,12 +7,12 @@ class Config
 {
 
     const ATTRIBUTE_FINDER = 'AttributeFinder';
+    const FUNCTION_FACTORY = 'FuncFactory';
+    const COMBINING_ALGORITHM_FACTORY = 'CombiningAlgorithmFactory';
 
     protected static $config = array();
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * @param string $key

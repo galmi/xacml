@@ -33,6 +33,9 @@ class ApplyTest extends PHPUnit_Framework_TestCase
     public function testEvaluate()
     {
         $request = new \Galmi\Xacml\Request();
+        $funcFactory = new \Galmi\Xacml\FuncFactory();
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::FUNCTION_FACTORY, $funcFactory);
+
         $apply = new \Galmi\Xacml\Expression\Apply('string-equal');
 
         $expression1 = new \Galmi\Xacml\Expression\AttributeValue('expression 1');
@@ -47,6 +50,8 @@ class ApplyTest extends PHPUnit_Framework_TestCase
     public function testEvaluate2()
     {
         $request = new \Galmi\Xacml\Request();
+        $funcFactory = new \Galmi\Xacml\FuncFactory();
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::FUNCTION_FACTORY, $funcFactory);
 
         $apply1 = new \Galmi\Xacml\Expression\Apply('string-equal');
         $expression11 = new \Galmi\Xacml\Expression\AttributeValue('expression 1');
@@ -70,6 +75,8 @@ class ApplyTest extends PHPUnit_Framework_TestCase
     public function testEvaluate3()
     {
         $request = new \Galmi\Xacml\Request();
+        $funcFactory = new \Galmi\Xacml\FuncFactory();
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::FUNCTION_FACTORY, $funcFactory);
 
         $apply1 = new \Galmi\Xacml\Expression\Apply('string-equal');
         $expression11 = new \Galmi\Xacml\Expression\AttributeValue('expression 1');

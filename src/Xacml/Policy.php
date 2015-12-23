@@ -3,7 +3,7 @@
 namespace Galmi\Xacml;
 
 
-use Galmi\Xacml\Algorithm\CombiningAlgorithm;
+use Galmi\Xacml\Algorithm\CombiningAlgorithmInterface;
 
 /**
  * The <Policy> class is the smallest entity that SHALL be presented to the PDP for evaluation.
@@ -16,36 +16,54 @@ class Policy implements Evaluable
     protected $id;
 
     /**
+     * The version number of the Policy.
+     *
      * @var number
      */
     protected $version;
 
     /**
+     * A free-form description of the policy.
+     *
      * @var string
      */
     protected $description;
 
     /**
-     * The set of decision requests, identified by definitions for resource, subject and action
-     * that a rule, policy, or policy set is intended to evaluate
+     * The <Target> class defines the applicability of a <Policy> to a set of decision requests.
      *
      * @var Target
      */
     protected $target;
 
     /**
-     * A target, an effect, a condition and (optionally) a set of obligations or advice.  A component of a policy
+     * A sequence of rules that MUST be combined according to the RuleCombiningAlgId attribute.
+     * Rules whose <Target> classes and conditions match the decision request MUST be considered.
+     * Rules whose <Target> classes or conditions do not match the decision request SHALL be ignored.
      *
      * @var Rule[]
      */
     protected $rules = array();
 
     /**
-     * The procedure for combining decisions from multiple rules
+     * The identifier of the rule-combining algorithm by which the <Policy> class MUST be combined.
      *
-     * @var CombiningAlgorithm
+     * @var string
      */
-    protected $combiningAlgorithm;
+    protected $ruleCombiningAlgId;
+
+    /**
+     * Policy constructor.
+     * @param Target $target
+     * @param $ruleCombiningAlgId
+     * @param array $rules
+     */
+    public function __construct(Target $target, $ruleCombiningAlgId, $rules = array())
+    {
+        $this->target = $target;
+        $this->ruleCombiningAlgId = $ruleCombiningAlgId;
+        $this->rules = $rules;
+    }
 
     /**
      * Getter for Version
@@ -89,52 +107,6 @@ class Policy implements Evaluable
     public function setDescription($description)
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Getter for Target
-     *
-     * @return Target
-     */
-    public function getTarget()
-    {
-        return $this->target;
-    }
-
-    /**
-     * Setter for Target
-     *
-     * @param Target $target
-     * @return $this
-     */
-    public function setTarget($target)
-    {
-        $this->target = $target;
-
-        return $this;
-    }
-
-    /**
-     * Getter for Combining algorithm
-     *
-     * @return CombiningAlgorithm
-     */
-    public function getCombiningAlghoritm()
-    {
-        return $this->combiningAlgorithm;
-    }
-
-    /**
-     * Setter Combining algorithm
-     *
-     * @param CombiningAlgorithm $combiningAlgorithm
-     * @return $this
-     */
-    public function setCombiningAlghoritm($combiningAlgorithm)
-    {
-        $this->combiningAlgorithm = $combiningAlgorithm;
 
         return $this;
     }
@@ -186,6 +158,16 @@ class Policy implements Evaluable
     }
 
     /**
+     * @return CombiningAlgorithmInterface
+     * @throws Exception\FunctionNotFoundException
+     */
+    public function getRuleCombiningAlgorithm()
+    {
+        $combiningAlgorithmFactory = Config::get(Config::COMBINING_ALGORITHM_FACTORY);
+        return $combiningAlgorithmFactory->getCombiningAlgorithm($this->ruleCombiningAlgId);
+    }
+
+    /**
      *  ---------------------------------------------------------------------------
      * |    Target       | Rule values |              Policy Value                 |
      *  ---------------------------------------------------------------------------
@@ -211,14 +193,19 @@ class Policy implements Evaluable
      */
     public function evaluate(Request $request)
     {
+        $targetValue = null;
         $combiningAlgorithmDecision = null;
         $decision = Decision::NOT_APPLICABLE;
         try {
-            if ($this->getTarget() == null || $this->getTarget()->evaluate($request) === Match::MATCH) {
-                $combiningAlgorithmDecision = $this->combiningAlgorithm->evaluate($this->rules);
+            $targetValue = $this->target->evaluate($request);
+            if ($targetValue === Match::MATCH) {
+                $combiningAlgorithmDecision = $this->getRuleCombiningAlgorithm()->evaluate($this->rules);
                 $decision = $combiningAlgorithmDecision;
             }
         } catch (\Exception $e) {
+            if ($targetValue == null) {
+                $combiningAlgorithmDecision = $this->getRuleCombiningAlgorithm()->evaluate($this->rules);
+            }
             switch ($combiningAlgorithmDecision) {
                 case (Decision::NOT_APPLICABLE):
                     $decision = Decision::NOT_APPLICABLE;

@@ -3,8 +3,8 @@
 namespace Galmi\Xacml\Expression;
 
 
+use Galmi\Xacml\Config;
 use Galmi\Xacml\Expression;
-use Galmi\Xacml\FuncFactory;
 use Galmi\Xacml\Request;
 
 /**
@@ -94,17 +94,27 @@ class Apply extends Expression
     }
 
     /**
+     * Get function from functionId
+     *
+     * @return \Galmi\Xacml\Func\FuncInterface
+     * @throws \Galmi\Xacml\Exception\FunctionNotFoundException
+     */
+    public function getFunc()
+    {
+        $funcFactory = Config::get(Config::FUNCTION_FACTORY);
+        return $funcFactory->getFunction($this->functionId);
+    }
+
+    /**
      * @inheritdoc
      */
     public function evaluate(Request $request)
     {
-        $funcFactory = new FuncFactory();
-        $func = $funcFactory->getFunction($this->functionId);
         $values = [];
         foreach($this->getExpressions() as $expression) {
             $values[] = $expression->evaluate($request);
         }
-        return $func->evaluate($values);
+        return $this->getFunc()->evaluate($values);
     }
 
 }
