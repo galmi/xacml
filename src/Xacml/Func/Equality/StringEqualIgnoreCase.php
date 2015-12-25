@@ -32,6 +32,6 @@ class StringEqualIgnoreCase extends AbstractEquality
      */
     protected function bringType($value)
     {
-        return (string)$this->funcFactory->get('mb_convert_case($value, MB_CASE_LOWER)')->evaluate([$value]);
+        return (string)$this->funcFactory->get('string-normalize-to-lower-case')->evaluate([$value]);
     }
 }

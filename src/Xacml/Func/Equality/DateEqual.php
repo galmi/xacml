@@ -18,7 +18,12 @@ class DateEqual extends AbstractEquality
      */
     protected function bringType($value)
     {
-        $dateTimeValue = new \DateTime($value);
-        return $dateTimeValue->format('Y-m-d');
+        if ($value instanceof \DateTime) {
+            $dateTimeValue = $value;
+        } else {
+            $dateTimeValue = new \DateTime($value);
+        }
+        $dateTimeValue->setTime(0, 0, 0);
+        return $dateTimeValue;
     }
 }

@@ -16,6 +16,7 @@ abstract class AbstractEquality implements FuncInterface
     /**
      * @param array $values
      * @return bool
+     * @throws \InvalidArgumentException
      */
     public function evaluate(array $values)
     {

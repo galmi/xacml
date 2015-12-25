@@ -22,6 +22,18 @@ class FuncRegistryTest extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Galmi\Xacml\Exception\FunctionNotFoundException
+     * @expectedExceptionMessage Class MyFunc not found
+     */
+    public function testSet()
+    {
+        $func = new \Galmi\Xacml\FuncRegistry();
+
+        $func->set('my-func', \MyFunc::class);
+
+        $func->get('my-func');
+    }
+    /**
+     * @expectedException \Galmi\Xacml\Exception\FunctionNotFoundException
      */
     public function testGetFunctionException()
     {

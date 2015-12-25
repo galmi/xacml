@@ -18,7 +18,6 @@ class TimeEqual extends AbstractEquality
      */
     protected function bringType($value)
     {
-        $dateTimeValue = new \DateTime($value);
-        return $dateTimeValue->format('H:i:s');
+        return strtotime($value);
     }
 }
