@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ildar
- * Date: 25.12.15
- * Time: 0:48
- */
 
 namespace Galmi\Xacml;
 
