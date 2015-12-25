@@ -163,7 +163,7 @@ class Policy implements Evaluable
      */
     public function getRuleCombiningAlgorithm()
     {
-        $combiningAlgorithmFactory = Config::get(Config::COMBINING_ALGORITHM_FACTORY);
+        $combiningAlgorithmFactory = Config::get(Config::COMBINING_ALGORITHM_REGISTRY);
         return $combiningAlgorithmFactory->getCombiningAlgorithm($this->ruleCombiningAlgId);
     }
 

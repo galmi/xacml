@@ -202,13 +202,13 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
     protected function addAlgorithmFactory($algorithm)
     {
         $combiningAlgorithmFactory = $this
-            ->getMockBuilder('\\Galmi\\Xacml\\CombiningAlgorithmFactory')
+            ->getMockBuilder('\\Galmi\\Xacml\\CombiningAlgorithmRegistry')
             ->setMethods(['getCombiningAlgorithm'])
             ->getMock();
         $combiningAlgorithmFactory
             ->method('getCombiningAlgorithm')
             ->willReturn($algorithm);
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::COMBINING_ALGORITHM_FACTORY, $combiningAlgorithmFactory);
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::COMBINING_ALGORITHM_REGISTRY, $combiningAlgorithmFactory);
     }
 
     public function testAddPolicySet()

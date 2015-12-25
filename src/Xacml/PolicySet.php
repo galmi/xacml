@@ -89,7 +89,7 @@ class PolicySet implements Evaluable
      */
     public function getPolicyCombiningAlgorithm()
     {
-        $combiningAlgorithmFactory = Config::get(Config::COMBINING_ALGORITHM_FACTORY);
+        $combiningAlgorithmFactory = Config::get(Config::COMBINING_ALGORITHM_REGISTRY);
 
         return $combiningAlgorithmFactory->getCombiningAlgorithm($this->policyCombiningAlgId);
     }
