@@ -8,8 +8,6 @@
 
 namespace Galmi\Xacml;
 
-use Galmi\Xacml\Algorithm\CombiningAlgorithmInterface;
-
 /**
  * Factory class for retrieve algorithm object from combiningAlgorithmId
  *
@@ -24,7 +22,7 @@ class CombiningAlgorithmFactory
      * Retrieve function object from combiningAlgorithmId
      *
      * @param $combiningAlgorithmId
-     * @return CombiningAlgorithmInterface
+     * @return CombiningAlgorithm\AlgorithmInterface
      * @throws Exception\FunctionNotFoundException
      */
     public function getCombiningAlgorithm($combiningAlgorithmId)

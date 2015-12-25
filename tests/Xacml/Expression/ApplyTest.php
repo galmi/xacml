@@ -33,8 +33,8 @@ class ApplyTest extends PHPUnit_Framework_TestCase
     public function testEvaluate()
     {
         $request = new \Galmi\Xacml\Request();
-        $funcFactory = new \Galmi\Xacml\FuncFactory();
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::FUNCTION_FACTORY, $funcFactory);
+        $funcRegistry = new \Galmi\Xacml\FuncRegistry();
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::FUNC_REGISTRY, $funcRegistry);
 
         $apply = new \Galmi\Xacml\Expression\Apply('string-equal');
 
@@ -50,8 +50,8 @@ class ApplyTest extends PHPUnit_Framework_TestCase
     public function testEvaluate2()
     {
         $request = new \Galmi\Xacml\Request();
-        $funcFactory = new \Galmi\Xacml\FuncFactory();
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::FUNCTION_FACTORY, $funcFactory);
+        $funcFactory = new \Galmi\Xacml\FuncRegistry();
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::FUNC_REGISTRY, $funcFactory);
 
         $apply1 = new \Galmi\Xacml\Expression\Apply('string-equal');
         $expression11 = new \Galmi\Xacml\Expression\AttributeValue('expression 1');
@@ -65,7 +65,7 @@ class ApplyTest extends PHPUnit_Framework_TestCase
         $apply2->addExpression($expression21);
         $apply2->addExpression($expression22);
 
-        $apply = new \Galmi\Xacml\Expression\Apply('func-and');
+        $apply = new \Galmi\Xacml\Expression\Apply('and');
         $apply->addExpression($apply1);
         $apply->addExpression($apply2);
 
@@ -75,8 +75,8 @@ class ApplyTest extends PHPUnit_Framework_TestCase
     public function testEvaluate3()
     {
         $request = new \Galmi\Xacml\Request();
-        $funcFactory = new \Galmi\Xacml\FuncFactory();
-        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::FUNCTION_FACTORY, $funcFactory);
+        $funcFactory = new \Galmi\Xacml\FuncRegistry();
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::FUNC_REGISTRY, $funcFactory);
 
         $apply1 = new \Galmi\Xacml\Expression\Apply('string-equal');
         $expression11 = new \Galmi\Xacml\Expression\AttributeValue('expression 1');
@@ -90,7 +90,7 @@ class ApplyTest extends PHPUnit_Framework_TestCase
         $apply2->addExpression($expression21);
         $apply2->addExpression($expression22);
 
-        $apply = new \Galmi\Xacml\Expression\Apply('func-and');
+        $apply = new \Galmi\Xacml\Expression\Apply('and');
         $apply->addExpression($apply1);
         $apply->addExpression($apply2);
 

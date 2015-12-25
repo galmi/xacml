@@ -84,7 +84,7 @@ class PolicySet implements Evaluable
     }
 
     /**
-     * @return Algorithm\CombiningAlgorithmInterface
+     * @return CombiningAlgorithm\AlgorithmInterface
      * @throws Exception\FunctionNotFoundException
      */
     public function getPolicyCombiningAlgorithm()

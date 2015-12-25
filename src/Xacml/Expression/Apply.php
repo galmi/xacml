@@ -101,8 +101,8 @@ class Apply extends Expression
      */
     public function getFunc()
     {
-        $funcFactory = Config::get(Config::FUNCTION_FACTORY);
-        return $funcFactory->getFunction($this->functionId);
+        $funcFactory = Config::get(Config::FUNC_REGISTRY);
+        return $funcFactory->get($this->functionId);
     }
 
     /**

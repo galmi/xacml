@@ -1,6 +1,8 @@
 <?php
 
-namespace Galmi\Xacml\Func;
+namespace Galmi\Xacml\Func\Logical;
+
+use Galmi\Xacml\Func\FuncInterface;
 
 /**
  * Making AND operation for boolean type values

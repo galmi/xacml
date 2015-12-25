@@ -1,11 +1,11 @@
 <?php
 
-class FuncFactoryTest extends PHPUnit_Framework_TestCase
+class FuncRegistryTest extends PHPUnit_Framework_TestCase
 {
 
     public function testCamelCase()
     {
-        $func = new \Galmi\Xacml\FuncFactory();
+        $func = new \Galmi\Xacml\FuncRegistry();
 
         $camelCase = self::getMethod('camelCase');
         $this->assertEquals('StringEqual', $camelCase->invokeArgs($func, array('string-equal')));
@@ -13,11 +13,11 @@ class FuncFactoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Equal', $camelCase->invokeArgs($func, array('equal')));
     }
 
-    public function testGetFunction()
+    public function testGet()
     {
-        $func = new \Galmi\Xacml\FuncFactory();
+        $func = new \Galmi\Xacml\FuncRegistry();
 
-        $this->assertInstanceOf('\\Galmi\\Xacml\\Func\\FuncInterface', $func->getFunction('string-equal'));
+        $this->assertInstanceOf('\\Galmi\\Xacml\\Func\\FuncInterface', $func->get('string-equal'));
     }
 
     /**
@@ -25,15 +25,15 @@ class FuncFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testGetFunctionException()
     {
-        $func = new \Galmi\Xacml\FuncFactory();
+        $func = new \Galmi\Xacml\FuncRegistry();
 
         $this->assertInstanceOf('\\Galmi\\Xacml\\Func\\FuncInterface',
-            $func->getFunction('wrong-class'),
+            $func->get('wrong-class'),
             'FunctionNotFoundException');
     }
 
     protected function getMethod($name) {
-        $class = new ReflectionClass('\Galmi\Xacml\FuncFactory');
+        $class = new ReflectionClass('\Galmi\Xacml\FuncRegistry');
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         return $method;

@@ -7,7 +7,7 @@ class Config
 {
 
     const ATTRIBUTE_FINDER = 'AttributeFinder';
-    const FUNCTION_FACTORY = 'FuncFactory';
+    const FUNC_REGISTRY = 'FuncRegistry';
     const COMBINING_ALGORITHM_FACTORY = 'CombiningAlgorithmFactory';
 
     protected static $config = array();

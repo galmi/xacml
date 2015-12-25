@@ -3,8 +3,6 @@
 namespace Galmi\Xacml;
 
 
-use Galmi\Xacml\Algorithm\CombiningAlgorithmInterface;
-
 /**
  * The <Policy> class is the smallest entity that SHALL be presented to the PDP for evaluation.
  *
@@ -160,7 +158,7 @@ class Policy implements Evaluable
     }
 
     /**
-     * @return CombiningAlgorithmInterface
+     * @return CombiningAlgorithm\AlgorithmInterface
      * @throws Exception\FunctionNotFoundException
      */
     public function getRuleCombiningAlgorithm()
