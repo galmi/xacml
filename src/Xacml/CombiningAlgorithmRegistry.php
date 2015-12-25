@@ -21,8 +21,6 @@ class CombiningAlgorithmRegistry
             'deny-unless-permit' => CombiningAlgorithm\DenyUnlessPermit::class,
             'first-applicable' => CombiningAlgorithm\FirstApplicable::class,
             'only-one-applicable' => CombiningAlgorithm\OnlyOneApplicable::class,
-            'ordered-deny-overrides' => CombiningAlgorithm\OrderedDenyOverrides::class,
-            'ordered-permit-overrides' => CombiningAlgorithm\OrderedPermitOverrides::class,
             'permit-overrides' => CombiningAlgorithm\PermitOverrides::class,
             'permit-unless-deny' => CombiningAlgorithm\PermitUnlessDeny::class,
         ];

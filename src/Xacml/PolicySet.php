@@ -248,13 +248,13 @@ class PolicySet implements Evaluable
             $targetValue = $this->target->evaluate($request);
             if ($targetValue === Match::MATCH) {
                 $combiningAlgorithmDecision = $this->getPolicyCombiningAlgorithm()
-                    ->evaluate($this->getPoliciesForCombingAlgorithm());
+                    ->evaluate($request, $this->getPoliciesForCombingAlgorithm());
                 $decision = $combiningAlgorithmDecision;
             }
         } catch (\Exception $e) {
             if ($targetValue == null) {
                 $combiningAlgorithmDecision = $this->getPolicyCombiningAlgorithm()
-                    ->evaluate($this->getPoliciesForCombingAlgorithm());
+                    ->evaluate($request, $this->getPoliciesForCombingAlgorithm());
             }
             switch ($combiningAlgorithmDecision) {
                 case (Decision::NOT_APPLICABLE):

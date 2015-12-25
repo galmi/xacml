@@ -1,22 +1,35 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ildar
- * Date: 25.12.15
- * Time: 12:48
- */
 
 namespace Galmi\Xacml\CombiningAlgorithm;
 
+use Galmi\Xacml\Decision;
+use Galmi\Xacml\Request;
 
+/**
+ * The “Permit-unless-deny” rule-combining algorithm of a policy or policy-combining algorithm of a policy set.
+ *
+ * @author Ildar Galiautdinov <ildar@galmi.ru>
+ */
 class PermitUnlessDeny implements AlgorithmInterface
 {
 
     /**
-     * @inheritdoc
+     * This algorithm has the following behavior.
+     * 1.     If any decision is "Deny", the result is "Deny".
+     * 2.     Otherwise, the result is "Permit".
+     *
+     * @param Request $request
+     * @param \Galmi\Xacml\Policy[]|\Galmi\Xacml\PolicySet[]|\Galmi\Xacml\Rule[] $items
+     * @return string
      */
-    public function evaluate(array $items)
+    public function evaluate(Request $request, array $items)
     {
-        // TODO: Implement evaluate() method.
+        foreach ($items as $item) {
+            if ($item->evaluate($request) == Decision::DENY) {
+                return Decision::DENY;
+            }
+        }
+
+        return Decision::PERMIT;
     }
 }
