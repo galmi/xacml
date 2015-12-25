@@ -57,12 +57,14 @@ class Policy implements Evaluable
      * @param Target $target
      * @param $ruleCombiningAlgId
      * @param array $rules
+     * @param int $version
      */
-    public function __construct(Target $target, $ruleCombiningAlgId, $rules = array())
+    public function __construct(Target $target, $ruleCombiningAlgId, $rules = array(), $version = 1)
     {
         $this->target = $target;
         $this->ruleCombiningAlgId = $ruleCombiningAlgId;
         $this->rules = $rules;
+        $this->version = $version;
     }
 
     /**
