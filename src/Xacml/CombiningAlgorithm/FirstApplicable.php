@@ -21,19 +21,9 @@ class FirstApplicable implements AlgorithmInterface
     public function evaluate(Request $request, array $items)
     {
         foreach ($items as $item) {
-            try {
-                $decision = $item->evaluate($request);
-            } catch (\Exception $e) {
-                return Decision::INDETERMINATE;
-            }
-            if ($decision == Decision::DENY) {
-                return Decision::DENY;
-            }
-            if ($decision == Decision::PERMIT) {
-                return Decision::PERMIT;
-            }
-            if ($decision == Decision::NOT_APPLICABLE) {
-                continue;
+            $decision = $item->evaluate($request);
+            if ($decision != Decision::NOT_APPLICABLE) {
+                return $decision;
             }
         }
 
