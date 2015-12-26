@@ -23,10 +23,5 @@
     "psr-4" : {
       "Galmi\\Xacml\\" : "src/Xacml"
     }
-  },
-  "extra" : {
-    "branch-alias" : {
-      "dev-master" : "master"
-    }
   }
 }
