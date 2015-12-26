@@ -56,4 +56,20 @@ class Match implements Evaluable
         }
         return $attributeDesignateValue === $this->attributeValue;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAttributeValue()
+    {
+        return $this->attributeValue;
+    }
+
+    /**
+     * @return AttributeDesignator
+     */
+    public function getAttributeDesignator()
+    {
+        return $this->attributeDesignator;
+    }
 }

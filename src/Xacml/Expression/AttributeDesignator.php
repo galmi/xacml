@@ -48,7 +48,6 @@ class AttributeDesignator extends Expression
     {
         $this->attributeId = $attributeId;
         $this->mustBePresent = $mustBePresent;
-        $this->attributeFinder = Config::get(Config::ATTRIBUTE_FINDER);
     }
 
     /**
@@ -59,7 +58,8 @@ class AttributeDesignator extends Expression
     public function evaluate(Request $request)
     {
         try {
-            $value = $this->attributeFinder->getValue($request, $this->attributeId);
+            $attributeFinder = Config::get(Config::ATTRIBUTE_FINDER);
+            $value = $attributeFinder->getValue($request, $this->attributeId);
         } catch (\Exception $e) {
             return Match::INDETERMINATE;
         }
@@ -68,5 +68,21 @@ class AttributeDesignator extends Expression
         }
 
         return $value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttributeId()
+    {
+        return $this->attributeId;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isMustBePresent()
+    {
+        return $this->mustBePresent;
     }
 }
