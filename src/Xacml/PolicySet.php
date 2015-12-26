@@ -244,19 +244,12 @@ class PolicySet implements Evaluable
         $targetValue = null;
         $combiningAlgorithmDecision = null;
         $decision = Decision::NOT_APPLICABLE;
-        try {
-            $targetValue = $this->target->evaluate($request);
-            if ($targetValue === Match::MATCH) {
-                $combiningAlgorithmDecision = $this->getPolicyCombiningAlgorithm()
-                    ->evaluate($request, $this->getPoliciesForCombingAlgorithm());
-                $decision = $combiningAlgorithmDecision;
-            }
-        } catch (\Exception $e) {
-            if ($targetValue == null) {
-                $combiningAlgorithmDecision = $this->getPolicyCombiningAlgorithm()
-                    ->evaluate($request, $this->getPoliciesForCombingAlgorithm());
-            }
-            switch ($combiningAlgorithmDecision) {
+        $targetValue = $this->target->evaluate($request);
+        if ($targetValue === Match::MATCH) {
+            $decision = $this->getPolicyCombiningAlgorithm()
+                ->evaluate($request, $this->getPoliciesForCombingAlgorithm());
+        } elseif ($targetValue == Match::INDETERMINATE) {
+            switch ($this->getPolicyCombiningAlgorithm()->evaluate($request, $this->getPoliciesForCombingAlgorithm())) {
                 case (Decision::NOT_APPLICABLE):
                     $decision = Decision::NOT_APPLICABLE;
                     break;

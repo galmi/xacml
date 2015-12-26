@@ -83,7 +83,10 @@ class Target implements Evaluable
         /** @var TargetAnyOf $target */
         foreach ($this->getTargetAnyOf() as $target) {
             $targetEvaluate = $target->evaluate($request);
-            if ($targetEvaluate == Match::NOT_MATCH) {
+            if ($targetEvaluate === Match::INDETERMINATE) {
+                return Match::INDETERMINATE;
+            }
+            if ($targetEvaluate === Match::NOT_MATCH) {
                 return Match::NOT_MATCH;
             }
         }

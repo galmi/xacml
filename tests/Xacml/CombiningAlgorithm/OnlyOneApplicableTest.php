@@ -21,9 +21,6 @@ class OnlyOneApplicableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(\Galmi\Xacml\Decision::NOT_APPLICABLE, $algorithm->evaluate($request, $items));
     }
 
-    /**
-     * @expectedException Galmi\Xacml\Exception\IndeterminateException
-     */
     public function testEvaluateException()
     {
         $request = new \Galmi\Xacml\Request();
@@ -32,7 +29,7 @@ class OnlyOneApplicableTest extends PHPUnit_Framework_TestCase
             $this->createItem(\Galmi\Xacml\Decision::DENY),
         ];
         $algorithm = new \Galmi\Xacml\CombiningAlgorithm\OnlyOneApplicable();
-        $this->assertEquals(\Galmi\Xacml\Decision::DENY, $algorithm->evaluate($request, $items));
+        $this->assertEquals(\Galmi\Xacml\Decision::INDETERMINATE, $algorithm->evaluate($request, $items));
     }
 
     public function createItem($response)

@@ -4,7 +4,6 @@ namespace Galmi\Xacml\CombiningAlgorithm;
 
 
 use Galmi\Xacml\Decision;
-use Galmi\Xacml\Exception\IndeterminateException;
 use Galmi\Xacml\Request;
 
 /**
@@ -31,7 +30,6 @@ class OnlyOneApplicable implements AlgorithmInterface
      * @param Request $request
      * @param \Galmi\Xacml\Policy[]|\Galmi\Xacml\PolicySet[]|\Galmi\Xacml\Rule[] $items
      * @return string
-     * @throws IndeterminateException
      */
     public function evaluate(Request $request, array $items)
     {
@@ -44,7 +42,7 @@ class OnlyOneApplicable implements AlgorithmInterface
 
             if ($appResult != Decision::NOT_APPLICABLE) {
                 if ($atLeastOne) {
-                    throw new IndeterminateException();
+                    return Decision::INDETERMINATE;
                 } else {
                     $atLeastOne = true;
                     $selectedPolicyValue = $appResult;

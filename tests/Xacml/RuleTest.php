@@ -102,14 +102,14 @@ class RuleTest extends PHPUnit_Framework_TestCase
         $target = new \Galmi\Xacml\Target();
         $target->addTargetAnyOf($anyOf);
 
-        $apply = new \Galmi\Xacml\Expression\Apply('string-equal');
-        $expression1 = new \Galmi\Xacml\Expression\AttributeValue('expression 1');
-        $apply->addExpression($expression1);
+        $applyMock = $this->getMockForAbstractClass('\Galmi\Xacml\Expression');
+        $applyMock->method('evaluate')
+            ->willReturn(\Galmi\Xacml\Match::INDETERMINATE);
 
-        $rule = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::PERMIT, $target, $apply);
+        $rule = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::PERMIT, $target, $applyMock);
         $this->assertEquals(\Galmi\Xacml\Decision::INDETERMINATE_P, $rule->evaluate($request));
 
-        $rule = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::DENY, $target, $apply);
+        $rule = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::DENY, $target, $applyMock);
         $this->assertEquals(\Galmi\Xacml\Decision::INDETERMINATE_D, $rule->evaluate($request));
     }
 
@@ -128,11 +128,7 @@ class RuleTest extends PHPUnit_Framework_TestCase
             ->setConstructorArgs(array('Subject.role', 'Manager'))
             ->getMock();
         $matchMock->method('evaluate')
-            ->will(
-                $this->returnCallback(function() {
-                    throw new \Exception('test exception');
-                })
-            );
+            ->willReturn(\Galmi\Xacml\Match::INDETERMINATE);
         $allOf = new \Galmi\Xacml\TargetAllOf();
         $allOf->addMatch($matchMock);
         $anyOf = new \Galmi\Xacml\TargetAnyOf();

@@ -284,7 +284,6 @@ class TargetTest extends \PHPUnit_Framework_TestCase
      *
      * Result = Indeterminate
      *
-     * @expectedException \Galmi\Xacml\Exception\IndeterminateException
      */
     public function testEvaluate8()
     {
@@ -295,11 +294,7 @@ class TargetTest extends \PHPUnit_Framework_TestCase
             ->setConstructorArgs(array('Subject.role', 'Manager'))
             ->getMock();
         $matchMock->method('evaluate')
-            ->will(
-                $this->returnCallback(function() {
-                    throw new \Exception('test exception');
-                })
-            );
+            ->willReturn(\Galmi\Xacml\Match::INDETERMINATE);
         $allOf = new \Galmi\Xacml\TargetAllOf();
         $allOf->addMatch($matchMock);
         $anyOf = new \Galmi\Xacml\TargetAnyOf();

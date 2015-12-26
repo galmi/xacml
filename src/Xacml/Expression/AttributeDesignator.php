@@ -58,7 +58,11 @@ class AttributeDesignator extends Expression
      */
     public function evaluate(Request $request)
     {
-        $value = $this->attributeFinder->getValue($request, $this->attributeId);
+        try {
+            $value = $this->attributeFinder->getValue($request, $this->attributeId);
+        } catch (\Exception $e) {
+            return Match::INDETERMINATE;
+        }
         if ($value == null && $this->mustBePresent) {
             return Match::INDETERMINATE;
         }

@@ -51,6 +51,9 @@ class Match implements Evaluable
     public function evaluate(Request $request)
     {
         $attributeDesignateValue = $this->attributeDesignator->evaluate($request);
+        if ($attributeDesignateValue == Match::INDETERMINATE) {
+            return Match::INDETERMINATE;
+        }
         return $attributeDesignateValue === $this->attributeValue;
     }
 }

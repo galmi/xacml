@@ -77,23 +77,21 @@ class TargetAnyOf implements Evaluable
     public function evaluate(Request $request)
     {
         if (count($this->getTargetAllOf()) == 0) {
-            throw new Exception\IndeterminateException();
+            return Match::INDETERMINATE;
         }
         $hasIndeterminate = false;
         /** @var TargetAllOf $target */
         foreach ($this->getTargetAllOf() as $target) {
-            try {
-                $targetEvaluate = $target->evaluate($request);
-                if ($targetEvaluate == Match::MATCH) {
-                    return Match::MATCH;
-                }
-            } catch (\Exception $e) {
+            $targetEvaluate = $target->evaluate($request);
+            if ($targetEvaluate === Match::INDETERMINATE) {
                 $hasIndeterminate = true;
+            } elseif ($targetEvaluate === Match::MATCH) {
+                return Match::MATCH;
             }
         }
 
         if ($hasIndeterminate) {
-            throw new Exception\IndeterminateException();
+            return Match::INDETERMINATE;
         }
 
         return Match::NOT_MATCH;

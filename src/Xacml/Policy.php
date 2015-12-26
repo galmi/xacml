@@ -164,6 +164,7 @@ class Policy implements Evaluable
     public function getRuleCombiningAlgorithm()
     {
         $combiningAlgorithmFactory = Config::get(Config::COMBINING_ALGORITHM_REGISTRY);
+
         return $combiningAlgorithmFactory->getCombiningAlgorithm($this->ruleCombiningAlgId);
     }
 
@@ -196,17 +197,11 @@ class Policy implements Evaluable
         $targetValue = null;
         $combiningAlgorithmDecision = null;
         $decision = Decision::NOT_APPLICABLE;
-        try {
-            $targetValue = $this->target->evaluate($request);
-            if ($targetValue === Match::MATCH) {
-                $combiningAlgorithmDecision = $this->getRuleCombiningAlgorithm()->evaluate($request, $this->rules);
-                $decision = $combiningAlgorithmDecision;
-            }
-        } catch (\Exception $e) {
-            if ($targetValue == null) {
-                $combiningAlgorithmDecision = $this->getRuleCombiningAlgorithm()->evaluate($request, $this->rules);
-            }
-            switch ($combiningAlgorithmDecision) {
+        $targetValue = $this->target->evaluate($request);
+        if ($targetValue === Match::MATCH) {
+            $decision = $this->getRuleCombiningAlgorithm()->evaluate($request, $this->rules);
+        } elseif ($targetValue === Match::INDETERMINATE) {
+            switch ($this->getRuleCombiningAlgorithm()->evaluate($request, $this->rules)) {
                 case (Decision::NOT_APPLICABLE):
                     $decision = Decision::NOT_APPLICABLE;
                     break;
@@ -229,7 +224,6 @@ class Policy implements Evaluable
                     $decision = Decision::INDETERMINATE_D_P;
             }
         }
-
         return $decision;
     }
 }

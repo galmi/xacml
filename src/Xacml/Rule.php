@@ -158,20 +158,22 @@ class Rule implements Evaluable
      */
     public function evaluate(Request $request)
     {
+        $targetValue = null;
+        $conditionValue = null;
         $decision = Decision::NOT_APPLICABLE;
-        try {
-            if ($this->getTarget() == null || $this->getTarget()->evaluate($request) === Match::MATCH) {
-                if ($this->getCondition() == null || $this->getCondition()->evaluate($request) === true) {
-                    $decision = $this->getEffect();
-                }
+        if ($this->getTarget() === null || ($targetValue = $this->getTarget()->evaluate($request)) === Match::MATCH) {
+            if ($this->getCondition() === null || ($conditionValue = $this->getCondition()->evaluate($request)) === true) {
+                $decision = $this->getEffect();
             }
-        } catch (\Exception $e) {
-            if ($this->getEffect() == Decision::PERMIT) {
+        }
+        if ($targetValue === Match::INDETERMINATE || $conditionValue === Match::INDETERMINATE) {
+            if ($this->getEffect() === Decision::PERMIT) {
                 $decision = Decision::INDETERMINATE_P;
             } else {
                 $decision = Decision::INDETERMINATE_D;
             }
         }
+
         return $decision;
     }
 }

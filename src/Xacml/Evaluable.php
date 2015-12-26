@@ -14,7 +14,6 @@ interface Evaluable
      *
      * @param Request $request
      * @return string|bool
-     * @throws Exception\IndeterminateException
      */
     public function evaluate(Request $request);
 }

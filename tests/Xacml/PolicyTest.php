@@ -106,7 +106,7 @@ class PolicyTest extends PHPUnit_Framework_TestCase
             ->setMethods(['evaluate'])
             ->getMock();
         $target->method('evaluate')->willReturnCallback(function(){
-            throw new \Galmi\Xacml\Exception\IndeterminateException;
+            return \Galmi\Xacml\Match::INDETERMINATE;
         });
         $policy = new \Galmi\Xacml\Policy($target, 'deny-overrides');
 
@@ -174,9 +174,6 @@ class PolicyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(\Galmi\Xacml\Decision::INDETERMINATE_D, $policy->evaluate($request));
     }
 
-    /**
-     * @expectedException \Galmi\Xacml\Exception\IndeterminateException
-     */
     public function testEvaluate5()
     {
         $request = new \Galmi\Xacml\Request();
@@ -184,7 +181,7 @@ class PolicyTest extends PHPUnit_Framework_TestCase
             ->setMethods(['evaluate'])
             ->getMock();
         $target->method('evaluate')->willReturnCallback(function(){
-            throw new \Galmi\Xacml\Exception\IndeterminateException;
+            return \Galmi\Xacml\Decision::INDETERMINATE;
         });
         $policy = new \Galmi\Xacml\Policy($target, 'deny-overrides');
 
@@ -193,7 +190,7 @@ class PolicyTest extends PHPUnit_Framework_TestCase
             ->setMethods(['evaluate'])
             ->getMock();
         $algorithm->method('evaluate')->willReturnCallback(function(){
-            throw new \Galmi\Xacml\Exception\IndeterminateException;
+            return \Galmi\Xacml\Decision::INDETERMINATE;
         });
         $this->addAlgorithmFactory($algorithm);
         $this->assertEquals(\Galmi\Xacml\Decision::INDETERMINATE_D_P, $policy->evaluate($request));
