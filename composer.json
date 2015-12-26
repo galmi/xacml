@@ -1,6 +1,6 @@
 {
   "name" : "galmi/xacml",
-  "description" : "XACML Bundle",
+  "description" : "XACML standart implementation library",
   "type" : "library",
   "authors" : [{
     "name" : "galmi",
