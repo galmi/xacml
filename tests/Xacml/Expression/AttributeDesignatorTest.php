@@ -33,6 +33,22 @@ class AttributeDesignatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(null, $attributeDesignator->evaluate($request));
     }
 
+    public function testEvaluate4()
+    {
+        $attributeId = 'Subject.id';
+        $request = $this->createRequest();
+        $attributeFinder = $this->getMockBuilder('stdClass')
+            ->setMethods(['getValue'])
+            ->getMock();
+        $attributeFinder->method('getValue')->willReturnCallback(function(){
+            throw new \Exception();
+        });
+        \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_FINDER, $attributeFinder);
+
+        $attributeDesignator = new \Galmi\Xacml\Expression\AttributeDesignator($attributeId, false);
+        $this->assertEquals(\Galmi\Xacml\Match::INDETERMINATE, $attributeDesignator->evaluate($request));
+    }
+
     protected function createFinder()
     {
         $attributeFinder = $this->getMockBuilder('stdClass')
