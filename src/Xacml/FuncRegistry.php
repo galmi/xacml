@@ -12,7 +12,18 @@ use Galmi\Xacml\Func\FuncInterface;
  */
 class FuncRegistry
 {
-    use UtilsTrait;
+    const STRING_EQUAL = 'string-equal';
+    const STRING_EQUAL_IGNORE_CASE = 'string-equal-ignore-case';
+    const BOOLEAN_EQUAL = 'boolean-equal';
+    const INTEGER_EQUAL = 'integer-equal';
+    const DOUBLE_EQUAL = 'double-equal';
+    const DATE_EQUAL = 'date-equal';
+    const TIME_EQUAL = 'time-equal';
+    const DATE_TIME_EQUAL = 'date-time-equal';
+
+    const STRING_NORMALIZE_TO_LOWER_CASE = 'string-normalize-to-lower-case';
+
+    const FUNC_AND = 'and';
 
     /**
      * List of functionId list and their class
@@ -24,18 +35,18 @@ class FuncRegistry
     public function __construct()
     {
         $this->functions = [
-            'string-equal' => Func\Equality\StringEqual::class,
-            'string-equal-ignore-case' => Func\Equality\StringEqualIgnoreCase::class,
-            'boolean-equal' => Func\Equality\BooleanEqual::class,
-            'integer-equal' => Func\Equality\IntegerEqual::class,
-            'double-equal' => Func\Equality\DoubleEqual::class,
-            'date-equal' => Func\Equality\DateEqual::class,
-            'time-equal' => Func\Equality\TimeEqual::class,
-            'dateTime-equal' => Func\Equality\DateTimeEqual::class,
+            self::STRING_EQUAL => Func\Equality\StringEqual::class,
+            self::STRING_EQUAL_IGNORE_CASE => Func\Equality\StringEqualIgnoreCase::class,
+            self::BOOLEAN_EQUAL => Func\Equality\BooleanEqual::class,
+            self::INTEGER_EQUAL => Func\Equality\IntegerEqual::class,
+            self::DOUBLE_EQUAL => Func\Equality\DoubleEqual::class,
+            self::DATE_EQUAL => Func\Equality\DateEqual::class,
+            self::TIME_EQUAL => Func\Equality\TimeEqual::class,
+            self::DATE_TIME_EQUAL => Func\Equality\DateTimeEqual::class,
 
-            'string-normalize-to-lower-case' => Func\StringConversion\StringNormalizeToLowerCase::class,
+            self::STRING_NORMALIZE_TO_LOWER_CASE => Func\StringConversion\StringNormalizeToLowerCase::class,
 
-            'and' => Func\Logical\FuncAnd::class,
+            self::FUNC_AND => Func\Logical\FuncAnd::class,
 
         ];
     }

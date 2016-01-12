@@ -66,6 +66,38 @@ class Policy implements Evaluable
     }
 
     /**
+     * @return Target
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRuleCombiningAlgId()
+    {
+        return $this->ruleCombiningAlgId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * Getter for Version
      *
      * @return number

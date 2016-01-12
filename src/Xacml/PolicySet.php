@@ -205,6 +205,31 @@ class PolicySet implements Evaluable
         return $this;
     }
 
+
+    /**
+     * @return string
+     */
+    public function getPolicyCombiningAlgId()
+    {
+        return $this->policyCombiningAlgId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     /**
      * Return array of PolicySets and Policies for Combining algorithm parameters
      *

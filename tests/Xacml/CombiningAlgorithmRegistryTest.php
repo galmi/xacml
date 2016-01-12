@@ -3,16 +3,6 @@
 class CombiningAlgorithmRegistryTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testCamelCase()
-    {
-        $func = new \Galmi\Xacml\CombiningAlgorithmRegistry();
-
-        $camelCase = self::getMethod('camelCase');
-        $this->assertEquals('StringEqual', $camelCase->invokeArgs($func, array('string-equal')));
-
-        $this->assertEquals('Equal', $camelCase->invokeArgs($func, array('equal')));
-    }
-
     public function testGet()
     {
         $func = new \Galmi\Xacml\CombiningAlgorithmRegistry();

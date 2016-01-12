@@ -10,19 +10,24 @@ namespace Galmi\Xacml;
 
 class CombiningAlgorithmRegistry
 {
-    use UtilsTrait;
+    const DENY_OVERRIDES = 'deny-overrides';
+    const DENY_UNLESS_PERMIT = 'deny-unless-permit';
+    const FIRST_APPLICABLE = 'first-applicable';
+    const ONLY_ONE_APPLICABLE = 'only-one-applicable';
+    const PERMIT_OVERRIDES = 'permit-overrides';
+    const PERMIT_UNLESS_DENY = 'permit-unless-deny';
 
     private $algorithms = array();
 
     public function __construct()
     {
         $this->algorithms = [
-            'deny-overrides' => CombiningAlgorithm\DenyOverrides::class,
-            'deny-unless-permit' => CombiningAlgorithm\DenyUnlessPermit::class,
-            'first-applicable' => CombiningAlgorithm\FirstApplicable::class,
-            'only-one-applicable' => CombiningAlgorithm\OnlyOneApplicable::class,
-            'permit-overrides' => CombiningAlgorithm\PermitOverrides::class,
-            'permit-unless-deny' => CombiningAlgorithm\PermitUnlessDeny::class,
+            self::DENY_OVERRIDES => CombiningAlgorithm\DenyOverrides::class,
+            self::DENY_UNLESS_PERMIT => CombiningAlgorithm\DenyUnlessPermit::class,
+            self::FIRST_APPLICABLE => CombiningAlgorithm\FirstApplicable::class,
+            self::ONLY_ONE_APPLICABLE => CombiningAlgorithm\OnlyOneApplicable::class,
+            self::PERMIT_OVERRIDES => CombiningAlgorithm\PermitOverrides::class,
+            self::PERMIT_UNLESS_DENY => CombiningAlgorithm\PermitUnlessDeny::class,
         ];
     }
 
