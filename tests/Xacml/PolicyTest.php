@@ -105,9 +105,11 @@ class PolicyTest extends PHPUnit_Framework_TestCase
         $target = $this->getMockBuilder('\\Galmi\\Xacml\\Target')
             ->setMethods(['evaluate'])
             ->getMock();
-        $target->method('evaluate')->willReturnCallback(function(){
-            return \Galmi\Xacml\Match::INDETERMINATE;
-        });
+        $target->method('evaluate')->willReturnCallback(
+            function () {
+                return \Galmi\Xacml\Match::INDETERMINATE;
+            }
+        );
         $policy = new \Galmi\Xacml\Policy($target, 'deny-overrides');
 
         // Line 1
@@ -180,18 +182,22 @@ class PolicyTest extends PHPUnit_Framework_TestCase
         $target = $this->getMockBuilder('\\Galmi\\Xacml\\Target')
             ->setMethods(['evaluate'])
             ->getMock();
-        $target->method('evaluate')->willReturnCallback(function(){
-            return \Galmi\Xacml\Decision::INDETERMINATE;
-        });
+        $target->method('evaluate')->willReturnCallback(
+            function () {
+                return \Galmi\Xacml\Decision::INDETERMINATE;
+            }
+        );
         $policy = new \Galmi\Xacml\Policy($target, 'deny-overrides');
 
         // Line 4
         $algorithm = $this->getMockBuilder('stdClass')
             ->setMethods(['evaluate'])
             ->getMock();
-        $algorithm->method('evaluate')->willReturnCallback(function(){
-            return \Galmi\Xacml\Decision::INDETERMINATE;
-        });
+        $algorithm->method('evaluate')->willReturnCallback(
+            function () {
+                return \Galmi\Xacml\Decision::INDETERMINATE;
+            }
+        );
         $this->addAlgorithmFactory($algorithm);
         $this->assertEquals(\Galmi\Xacml\Decision::INDETERMINATE_D_P, $policy->evaluate($request));
     }
@@ -200,10 +206,10 @@ class PolicyTest extends PHPUnit_Framework_TestCase
     {
         $combiningAlgorithmFactory = $this
             ->getMockBuilder('\\Galmi\\Xacml\\CombiningAlgorithmRegistry')
-            ->setMethods(['getCombiningAlgorithm'])
+            ->setMethods(['get'])
             ->getMock();
         $combiningAlgorithmFactory
-            ->method('getCombiningAlgorithm')
+            ->method('get')
             ->willReturn($algorithm);
         \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::COMBINING_ALGORITHM_REGISTRY, $combiningAlgorithmFactory);
     }

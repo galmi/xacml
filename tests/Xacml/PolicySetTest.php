@@ -105,9 +105,11 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
         $target = $this->getMockBuilder('\\Galmi\\Xacml\\Target')
             ->setMethods(['evaluate'])
             ->getMock();
-        $target->method('evaluate')->willReturnCallback(function(){
-            return \Galmi\Xacml\Match::INDETERMINATE;
-        });
+        $target->method('evaluate')->willReturnCallback(
+            function () {
+                return \Galmi\Xacml\Match::INDETERMINATE;
+            }
+        );
         $policySet = new \Galmi\Xacml\PolicySet($target, 'deny-overrides');
 
         // Line 1
@@ -180,18 +182,22 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
         $target = $this->getMockBuilder('\\Galmi\\Xacml\\Target')
             ->setMethods(['evaluate'])
             ->getMock();
-        $target->method('evaluate')->willReturnCallback(function(){
-            return \Galmi\Xacml\Match::INDETERMINATE;
-        });
+        $target->method('evaluate')->willReturnCallback(
+            function () {
+                return \Galmi\Xacml\Match::INDETERMINATE;
+            }
+        );
         $policySet = new \Galmi\Xacml\PolicySet($target, 'deny-overrides');
 
         // Line 4
         $algorithm = $this->getMockBuilder('stdClass')
             ->setMethods(['evaluate'])
             ->getMock();
-        $algorithm->method('evaluate')->willReturnCallback(function(){
-            return \Galmi\Xacml\Match::INDETERMINATE;
-        });
+        $algorithm->method('evaluate')->willReturnCallback(
+            function () {
+                return \Galmi\Xacml\Match::INDETERMINATE;
+            }
+        );
         $this->addAlgorithmFactory($algorithm);
         $this->assertEquals(\Galmi\Xacml\Decision::INDETERMINATE_D_P, $policySet->evaluate($request));
     }
@@ -200,10 +206,10 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
     {
         $combiningAlgorithmFactory = $this
             ->getMockBuilder('\\Galmi\\Xacml\\CombiningAlgorithmRegistry')
-            ->setMethods(['getCombiningAlgorithm'])
+            ->setMethods(['get'])
             ->getMock();
         $combiningAlgorithmFactory
-            ->method('getCombiningAlgorithm')
+            ->method('get')
             ->willReturn($algorithm);
         \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::COMBINING_ALGORITHM_REGISTRY, $combiningAlgorithmFactory);
     }
@@ -236,10 +242,12 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
         $this->assertEquals([$policy1, $policy2], $policySet->getPolicies());
     }
 
-    protected static function getMethod($name) {
+    protected static function getMethod($name)
+    {
         $class = new ReflectionClass('\Galmi\Xacml\PolicySet');
         $method = $class->getMethod($name);
         $method->setAccessible(true);
+
         return $method;
     }
 
@@ -260,8 +268,10 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
 
         $getPoliciesForCombingAlgorithm = self::getMethod('getPoliciesForCombingAlgorithm');
 
-        $this->assertEquals([$policySet1, $policySet2, $policy1, $policy2],
-            $getPoliciesForCombingAlgorithm->invoke($policySet));
+        $this->assertEquals(
+            [$policySet1, $policySet2, $policy1, $policy2],
+            $getPoliciesForCombingAlgorithm->invoke($policySet)
+        );
     }
 
     public function testRemovePolicySet()
