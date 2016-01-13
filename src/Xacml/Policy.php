@@ -232,9 +232,9 @@ class Policy implements Evaluable
         $decision = Decision::NOT_APPLICABLE;
         $targetValue = $this->target->evaluate($request);
         if ($targetValue === Match::MATCH) {
-            $decision = $this->getRuleCombiningAlgorithm()->evaluate($request, $this->rules);
+            $decision = $this->getRuleCombiningAlgorithm()->evaluate($request, $this->getRules());
         } elseif ($targetValue === Match::INDETERMINATE) {
-            switch ($this->getRuleCombiningAlgorithm()->evaluate($request, $this->rules)) {
+            switch ($this->getRuleCombiningAlgorithm()->evaluate($request, $this->getRules())) {
                 case (Decision::NOT_APPLICABLE):
                     $decision = Decision::NOT_APPLICABLE;
                     break;
