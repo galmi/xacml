@@ -65,6 +65,17 @@ class TargetAllOf implements Evaluable
     }
 
     /**
+     * @param Match[] $matches
+     * @return TargetAllOf
+     */
+    public function setMatches($matches)
+    {
+        $this->matches = $matches;
+
+        return $this;
+    }
+
+    /**
      *  ---------------------------------------------------------------
      * |            <Match> values                   |  <AllOf> Value  |
      *  ---------------------------------------------------------------

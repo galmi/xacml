@@ -64,6 +64,17 @@ class TargetAnyOf implements Evaluable
     }
 
     /**
+     * @param TargetAllOf[] $targetAllOf
+     * @return TargetAnyOf
+     */
+    public function setTargetAllOf($targetAllOf)
+    {
+        $this->targetAllOf = $targetAllOf;
+
+        return $this;
+    }
+
+    /**
      *  -----------------------------------------------------------------
      * |            <AllOf> values                     | <AnyOf> Value   |
      *  -----------------------------------------------------------------

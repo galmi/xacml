@@ -14,8 +14,9 @@ class PolicyTest extends PHPUnit_Framework_TestCase
     {
         $request = new \Galmi\Xacml\Request();
         $target = new \Galmi\Xacml\Target();
-        $policy = new \Galmi\Xacml\Policy($target, 'deny-overrides');
-
+        $policy = new \Galmi\Xacml\Policy();
+        $policy->setTarget($target);
+        $policy->setRuleCombiningAlgId('deny-overrides');
         $algorithm = $this->getMockBuilder('stdClass')
             ->setMethods(['evaluate'])
             ->getMock();
@@ -40,7 +41,9 @@ class PolicyTest extends PHPUnit_Framework_TestCase
             ->setMethods(['evaluate'])
             ->getMock();
         $target->method('evaluate')->willReturn(\Galmi\Xacml\Match::MATCH);
-        $policy = new \Galmi\Xacml\Policy($target, 'deny-overrides');
+        $policy = new \Galmi\Xacml\Policy();
+        $policy->setTarget($target);
+        $policy->setRuleCombiningAlgId('deny-overrides');
 
         $algorithm = $this->getMockBuilder('stdClass')
             ->setMethods(['evaluate'])
@@ -66,7 +69,9 @@ class PolicyTest extends PHPUnit_Framework_TestCase
             ->setMethods(['evaluate'])
             ->getMock();
         $target->method('evaluate')->willReturn(\Galmi\Xacml\Match::NOT_MATCH);
-        $policy = new \Galmi\Xacml\Policy($target, 'deny-overrides');
+        $policy = new \Galmi\Xacml\Policy();
+        $policy->setTarget($target);
+        $policy->setRuleCombiningAlgId('deny-overrides');
 
         $algorithm = $this->getMockBuilder('stdClass')
             ->setMethods(['evaluate'])
@@ -110,7 +115,9 @@ class PolicyTest extends PHPUnit_Framework_TestCase
                 return \Galmi\Xacml\Match::INDETERMINATE;
             }
         );
-        $policy = new \Galmi\Xacml\Policy($target, 'deny-overrides');
+        $policy = new \Galmi\Xacml\Policy();
+        $policy->setTarget($target);
+        $policy->setRuleCombiningAlgId('deny-overrides');
 
         // Line 1
         $algorithm = $this->getMockBuilder('stdClass')
@@ -187,7 +194,9 @@ class PolicyTest extends PHPUnit_Framework_TestCase
                 return \Galmi\Xacml\Decision::INDETERMINATE;
             }
         );
-        $policy = new \Galmi\Xacml\Policy($target, 'deny-overrides');
+        $policy = new \Galmi\Xacml\Policy();
+        $policy->setTarget($target);
+        $policy->setRuleCombiningAlgId('deny-overrides');
 
         // Line 4
         $algorithm = $this->getMockBuilder('stdClass')
@@ -217,7 +226,9 @@ class PolicyTest extends PHPUnit_Framework_TestCase
     public function testAddRule()
     {
         $target = new \Galmi\Xacml\Target();
-        $policy = new \Galmi\Xacml\Policy($target, 'combine-alg');
+        $policy = new \Galmi\Xacml\Policy();
+        $policy->setTarget($target);
+        $policy->setRuleCombiningAlgId('combine-alg');
 
         $rule1 = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::PERMIT);
         $rule2 = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::DENY);
@@ -234,7 +245,10 @@ class PolicyTest extends PHPUnit_Framework_TestCase
         $rule1 = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::PERMIT);
         $rule2 = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::DENY);
 
-        $policy = new \Galmi\Xacml\Policy($target, 'combine-alg', [$rule1, $rule2]);
+        $policy = new \Galmi\Xacml\Policy();
+        $policy->setTarget($target);
+        $policy->setRuleCombiningAlgId('combine-alg');
+        $policy->setRules([$rule1, $rule2]);
 
         $this->assertEquals([$rule1, $rule2], $policy->getRules());
     }
@@ -242,7 +256,9 @@ class PolicyTest extends PHPUnit_Framework_TestCase
     public function testRemoveRule()
     {
         $target = new \Galmi\Xacml\Target();
-        $policy = new \Galmi\Xacml\Policy($target, 'combine-alg');
+        $policy = new \Galmi\Xacml\Policy();
+        $policy->setTarget($target);
+        $policy->setRuleCombiningAlgId('combine-alg');
 
         $rule1 = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::PERMIT);
         $rule2 = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::DENY);
@@ -258,7 +274,9 @@ class PolicyTest extends PHPUnit_Framework_TestCase
     public function testSetters()
     {
         $target = new \Galmi\Xacml\Target();
-        $policy = new \Galmi\Xacml\Policy($target, 'combine-alg');
+        $policy = new \Galmi\Xacml\Policy();
+        $policy->setTarget($target);
+        $policy->setRuleCombiningAlgId('combine-alg');
 
         $policy->setVersion(1);
         $this->assertEquals(1, $policy->getVersion());

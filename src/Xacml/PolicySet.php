@@ -71,19 +71,6 @@ class PolicySet implements Evaluable
     protected $adviceExpressions;
 
     /**
-     * PolicySet constructor.
-     * @param Target $target
-     * @param $combiningAlgorithmId
-     * @param int $version
-     */
-    public function __construct(Target $target, $combiningAlgorithmId, $version = 1)
-    {
-        $this->target = $target;
-        $this->policyCombiningAlgId = $combiningAlgorithmId;
-        $this->version = $version;
-    }
-
-    /**
      * @return CombiningAlgorithm\AlgorithmInterface
      * @throws Exception\FunctionNotFoundException
      */
@@ -239,6 +226,78 @@ class PolicySet implements Evaluable
     protected function getPoliciesForCombingAlgorithm()
     {
         return array_merge($this->getPolicySets(), $this->getPolicies());
+    }
+
+
+    /**
+     * @param string $policyCombiningAlgId
+     * @return PolicySet
+     */
+    public function setPolicyCombiningAlgId($policyCombiningAlgId)
+    {
+        $this->policyCombiningAlgId = $policyCombiningAlgId;
+
+        return $this;
+    }
+
+    /**
+     * @param int $version
+     * @return PolicySet
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @param Target $target
+     * @return PolicySet
+     */
+    public function setTarget($target)
+    {
+        $this->target = $target;
+
+        return $this;
+    }
+
+    /**
+     * @return Target
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
+     * @param PolicySet[] $policySets
+     * @return PolicySet
+     */
+    public function setPolicySets($policySets)
+    {
+        $this->policySets = $policySets;
+
+        return $this;
+    }
+
+    /**
+     * @param Policy[] $policies
+     * @return PolicySet
+     */
+    public function setPolicies($policies)
+    {
+        $this->policies = $policies;
+
+        return $this;
     }
 
     /**

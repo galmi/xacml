@@ -14,7 +14,9 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
     {
         $request = new \Galmi\Xacml\Request();
         $target = new \Galmi\Xacml\Target();
-        $policySet = new \Galmi\Xacml\PolicySet($target, 'deny-overrides');
+        $policySet = new \Galmi\Xacml\PolicySet();
+        $policySet->setTarget($target);
+        $policySet->setPolicyCombiningAlgId('deny-overrides');
 
         $algorithm = $this->getMockBuilder('stdClass')
             ->setMethods(['evaluate'])
@@ -40,7 +42,9 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
             ->setMethods(['evaluate'])
             ->getMock();
         $target->method('evaluate')->willReturn(\Galmi\Xacml\Match::MATCH);
-        $policySet = new \Galmi\Xacml\PolicySet($target, 'deny-overrides');
+        $policySet = new \Galmi\Xacml\PolicySet();
+        $policySet->setTarget($target);
+        $policySet->setPolicyCombiningAlgId('deny-overrides');
 
         $algorithm = $this->getMockBuilder('stdClass')
             ->setMethods(['evaluate'])
@@ -66,7 +70,9 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
             ->setMethods(['evaluate'])
             ->getMock();
         $target->method('evaluate')->willReturn(\Galmi\Xacml\Match::NOT_MATCH);
-        $policySet = new \Galmi\Xacml\PolicySet($target, 'deny-overrides');
+        $policySet = new \Galmi\Xacml\PolicySet();
+        $policySet->setTarget($target);
+        $policySet->setPolicyCombiningAlgId('deny-overrides');
 
         $algorithm = $this->getMockBuilder('stdClass')
             ->setMethods(['evaluate'])
@@ -110,7 +116,9 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
                 return \Galmi\Xacml\Match::INDETERMINATE;
             }
         );
-        $policySet = new \Galmi\Xacml\PolicySet($target, 'deny-overrides');
+        $policySet = new \Galmi\Xacml\PolicySet();
+        $policySet->setTarget($target);
+        $policySet->setPolicyCombiningAlgId('deny-overrides');
 
         // Line 1
         $algorithm = $this->getMockBuilder('stdClass')
@@ -187,7 +195,9 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
                 return \Galmi\Xacml\Match::INDETERMINATE;
             }
         );
-        $policySet = new \Galmi\Xacml\PolicySet($target, 'deny-overrides');
+        $policySet = new \Galmi\Xacml\PolicySet();
+        $policySet->setTarget($target);
+        $policySet->setPolicyCombiningAlgId('deny-overrides');
 
         // Line 4
         $algorithm = $this->getMockBuilder('stdClass')
@@ -218,9 +228,13 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
     {
         $target = new \Galmi\Xacml\Target();
         $policySet = new \Galmi\Xacml\PolicySet($target, 'combine-alg');
+        $policySet->setTarget($target);
+        $policySet->setPolicyCombiningAlgId('combine-alg');
 
-        $policySet1 = new \Galmi\Xacml\PolicySet($target, 'combine-alg1');
-        $policySet2 = new \Galmi\Xacml\PolicySet($target, 'combine-alg2');
+        $policySet1 = new \Galmi\Xacml\PolicySet();
+        $policySet1->setPolicyCombiningAlgId('combine-alg1');
+        $policySet2 = new \Galmi\Xacml\PolicySet();
+        $policySet2->setPolicyCombiningAlgId('combine-alg2');
 
         $policySet->addPolicySet($policySet1);
         $policySet->addPolicySet($policySet2);
@@ -231,10 +245,12 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
     public function testAddPolicy()
     {
         $target = new \Galmi\Xacml\Target();
-        $policySet = new \Galmi\Xacml\PolicySet($target, 'combine-alg');
+        $policySet = new \Galmi\Xacml\PolicySet();
+        $policySet->setTarget($target);
+        $policySet->setPolicyCombiningAlgId('combine-alg');
 
-        $policy1 = new \Galmi\Xacml\Policy($target, 'combine-alg1');
-        $policy2 = new \Galmi\Xacml\Policy($target, 'combine-alg2');
+        $policy1 = new \Galmi\Xacml\Policy();
+        $policy2 = new \Galmi\Xacml\Policy();
 
         $policySet->addPolicy($policy1);
         $policySet->addPolicy($policy2);
@@ -254,15 +270,21 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
     public function testAddPolicySetPolicy()
     {
         $target = new \Galmi\Xacml\Target();
-        $policySet = new \Galmi\Xacml\PolicySet($target, 'combine-alg');
+        $policySet = new \Galmi\Xacml\PolicySet();
+        $policySet->setTarget($target);
+        $policySet->setPolicyCombiningAlgId('combine-alg');
 
-        $policySet1 = new \Galmi\Xacml\PolicySet($target, 'combine-alg1');
-        $policySet2 = new \Galmi\Xacml\PolicySet($target, 'combine-alg2');
+        $policySet1 = new \Galmi\Xacml\PolicySet();
+        $policySet1->setTarget($target);
+        $policySet1->setPolicyCombiningAlgId('combine-alg1');
+        $policySet2 = new \Galmi\Xacml\PolicySet();
+        $policySet2->setTarget($target);
+        $policySet2->setPolicyCombiningAlgId('combine-alg2');
         $policySet->addPolicySet($policySet1);
         $policySet->addPolicySet($policySet2);
 
-        $policy1 = new \Galmi\Xacml\Policy($target, 'combine-alg1');
-        $policy2 = new \Galmi\Xacml\Policy($target, 'combine-alg2');
+        $policy1 = new \Galmi\Xacml\Policy();
+        $policy2 = new \Galmi\Xacml\Policy();
         $policySet->addPolicy($policy1);
         $policySet->addPolicy($policy2);
 
@@ -277,10 +299,16 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
     public function testRemovePolicySet()
     {
         $target = new \Galmi\Xacml\Target();
-        $policySet = new \Galmi\Xacml\PolicySet($target, 'combine-alg');
+        $policySet = new \Galmi\Xacml\PolicySet();
+        $policySet->setTarget($target);
+        $policySet->setPolicyCombiningAlgId('combine-alg');
 
-        $policySet1 = new \Galmi\Xacml\PolicySet($target, 'combine-alg1');
-        $policySet2 = new \Galmi\Xacml\PolicySet($target, 'combine-alg2');
+        $policySet1 = new \Galmi\Xacml\PolicySet();
+        $policySet1->setTarget($target);
+        $policySet1->setPolicyCombiningAlgId('combine-alg1');
+        $policySet2 = new \Galmi\Xacml\PolicySet();
+        $policySet2->setTarget($target);
+        $policySet2->setPolicyCombiningAlgId('combine-alg2');
 
         $policySet->addPolicySet($policySet1);
         $policySet->addPolicySet($policySet2);
@@ -293,10 +321,12 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
     public function testRemovePolicy()
     {
         $target = new \Galmi\Xacml\Target();
-        $policySet = new \Galmi\Xacml\PolicySet($target, 'combine-alg');
+        $policySet = new \Galmi\Xacml\PolicySet();
+        $policySet->setTarget($target);
+        $policySet->setPolicyCombiningAlgId('combine-alg');
 
-        $policy1 = new \Galmi\Xacml\Policy($target, 'combine-alg1');
-        $policy2 = new \Galmi\Xacml\Policy($target, 'combine-alg2');
+        $policy1 = new \Galmi\Xacml\Policy();
+        $policy2 = new \Galmi\Xacml\Policy();
 
         $policySet->addPolicy($policy1);
         $policySet->addPolicy($policy2);
@@ -309,7 +339,7 @@ class PolicySetTest extends PHPUnit_Framework_TestCase
     public function testSetters()
     {
         $target = new \Galmi\Xacml\Target();
-        $policySet = new \Galmi\Xacml\PolicySet($target, 'combine-alg');
+        $policySet = new \Galmi\Xacml\PolicySet();
 
         $policySet->setDescription('descr');
         $this->assertEquals('descr', $policySet->getDescription());

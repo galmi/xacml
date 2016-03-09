@@ -39,10 +39,12 @@ class Match implements Evaluable
      * @param string $attributeId
      * @param mixed $expectedAttributeValue
      */
-    public function __construct($attributeId, $expectedAttributeValue)
+    public function __construct($attributeId = null, $expectedAttributeValue = null)
     {
+        if (!empty($attributeId)) {
+            $this->setAttributeId($attributeId);
+        }
         $this->attributeValue = $expectedAttributeValue;
-        $this->attributeDesignator = new AttributeDesignator($attributeId);
     }
 
     /**
@@ -71,5 +73,38 @@ class Match implements Evaluable
     public function getAttributeDesignator()
     {
         return $this->attributeDesignator;
+    }
+
+    /**
+     * @param mixed $attributeValue
+     * @return Match
+     */
+    public function setAttributeValue($attributeValue)
+    {
+        $this->attributeValue = $attributeValue;
+
+        return $this;
+    }
+
+    /**
+     * @param AttributeDesignator $attributeDesignator
+     * @return Match
+     */
+    public function setAttributeDesignator(AttributeDesignator $attributeDesignator)
+    {
+        $this->attributeDesignator = $attributeDesignator;
+
+        return $this;
+    }
+
+    /**
+     * @param string $attributeId
+     * @return $this
+     */
+    public function setAttributeId($attributeId)
+    {
+        $this->attributeDesignator = new AttributeDesignator($attributeId);
+
+        return $this;
     }
 }

@@ -59,7 +59,7 @@ class Rule implements Evaluable
      * @param Target|null $target
      * @param Expression|null $condition
      */
-    public function __construct($effect, $target = null, $condition = null)
+    public function __construct($effect = null, $target = null, $condition = null)
     {
         $this->effect = $effect;
         $this->target = $target;
@@ -97,6 +97,17 @@ class Rule implements Evaluable
     public function getEffect()
     {
         return $this->effect;
+    }
+
+    /**
+     * @param string $effect
+     * @return Rule
+     */
+    public function setEffect($effect)
+    {
+        $this->effect = $effect;
+
+        return $this;
     }
 
     /**

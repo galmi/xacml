@@ -51,21 +51,6 @@ class Policy implements Evaluable
     protected $ruleCombiningAlgId;
 
     /**
-     * Policy constructor.
-     * @param Target $target
-     * @param $ruleCombiningAlgId
-     * @param array $rules
-     * @param int $version
-     */
-    public function __construct(Target $target, $ruleCombiningAlgId, $rules = array(), $version = 1)
-    {
-        $this->target = $target;
-        $this->ruleCombiningAlgId = $ruleCombiningAlgId;
-        $this->rules = $rules;
-        $this->version = $version;
-    }
-
-    /**
      * @return Target
      */
     public function getTarget()
@@ -74,11 +59,39 @@ class Policy implements Evaluable
     }
 
     /**
+     * Set target
+     *
+     * @param Target $target
+     *
+     * @return Policy
+     */
+    public function setTarget(Target $target)
+    {
+        $this->target = $target;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getRuleCombiningAlgId()
     {
         return $this->ruleCombiningAlgId;
+    }
+
+    /**
+     * Set ruleCombiningAlgId
+     *
+     * @param string $ruleCombiningAlgId
+     *
+     * @return Policy
+     */
+    public function setRuleCombiningAlgId($ruleCombiningAlgId)
+    {
+        $this->ruleCombiningAlgId = $ruleCombiningAlgId;
+
+        return $this;
     }
 
     /**
@@ -151,6 +164,17 @@ class Policy implements Evaluable
     public function getRules()
     {
         return $this->rules ?: $this->rules = array();
+    }
+
+    /**
+     * @param Rule[] $rules
+     * @return $this
+     */
+    public function setRules($rules)
+    {
+        $this->rules = $rules;
+
+        return $this;
     }
 
     /**
