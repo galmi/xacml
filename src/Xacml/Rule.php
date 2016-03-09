@@ -153,6 +153,25 @@ class Rule implements Evaluable
     }
 
     /**
+     * @param mixed $id
+     * @return Rule
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      *  -----------------------------------------------------------------------------------------
      * |       Target         |    Condition    |               Rule Value                       |
      *  -----------------------------------------------------------------------------------------
