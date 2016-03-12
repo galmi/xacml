@@ -64,4 +64,14 @@ class CombiningAlgorithmRegistry
 
         return $this;
     }
+
+    /**
+     * Return registered algorithms list
+     *
+     * @return array
+     */
+    public function getAlgorithms()
+    {
+        return $this->algorithms;
+    }
 }
