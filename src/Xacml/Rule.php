@@ -54,19 +54,6 @@ class Rule implements Evaluable
     protected $adviceExpressions;
 
     /**
-     * Rule constructor.
-     * @param string $effect
-     * @param Target|null $target
-     * @param Expression|null $condition
-     */
-    public function __construct($effect = null, $target = null, $condition = null)
-    {
-        $this->effect = $effect;
-        $this->target = $target;
-        $this->condition = $condition;
-    }
-
-    /**
      * Getter for description
      *
      * @return string

@@ -4,7 +4,8 @@ class RuleTest extends PHPUnit_Framework_TestCase
 {
     public function testSetters()
     {
-        $rule = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::PERMIT);
+        $rule = new \Galmi\Xacml\Rule();
+        $rule->setEffect(\Galmi\Xacml\Decision::PERMIT);
 
         $this->assertEquals(\Galmi\Xacml\Decision::PERMIT, $rule->getEffect());
 
@@ -34,7 +35,8 @@ class RuleTest extends PHPUnit_Framework_TestCase
         \Galmi\Xacml\Config::set(\Galmi\Xacml\Config::ATTRIBUTE_FINDER, $this->createAttributeFinder());
 
         $effect = \Galmi\Xacml\Decision::PERMIT;
-        $rule = new \Galmi\Xacml\Rule($effect);
+        $rule = new \Galmi\Xacml\Rule();
+        $rule->setEffect($effect);
 
         $this->assertEquals($effect, $rule->evaluate($request));
 
@@ -77,7 +79,9 @@ class RuleTest extends PHPUnit_Framework_TestCase
         $target = new \Galmi\Xacml\Target();
         $target->addTargetAnyOf($anyOf);
 
-        $rule = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::PERMIT, $target);
+        $rule = new \Galmi\Xacml\Rule();
+        $rule->setEffect(\Galmi\Xacml\Decision::PERMIT);
+        $rule->setTarget($target);
         $this->assertEquals(\Galmi\Xacml\Decision::NOT_APPLICABLE, $rule->evaluate($request));
     }
 
@@ -106,10 +110,16 @@ class RuleTest extends PHPUnit_Framework_TestCase
         $applyMock->method('evaluate')
             ->willReturn(\Galmi\Xacml\Match::INDETERMINATE);
 
-        $rule = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::PERMIT, $target, $applyMock);
+        $rule = new \Galmi\Xacml\Rule();
+        $rule->setEffect(\Galmi\Xacml\Decision::PERMIT);
+        $rule->setTarget($target);
+        $rule->setCondition($applyMock);
         $this->assertEquals(\Galmi\Xacml\Decision::INDETERMINATE_P, $rule->evaluate($request));
 
-        $rule = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::DENY, $target, $applyMock);
+        $rule = new \Galmi\Xacml\Rule();
+        $rule->setEffect(\Galmi\Xacml\Decision::DENY);
+        $rule->setTarget($target);
+        $rule->setCondition($applyMock);
         $this->assertEquals(\Galmi\Xacml\Decision::INDETERMINATE_D, $rule->evaluate($request));
     }
 
@@ -136,10 +146,15 @@ class RuleTest extends PHPUnit_Framework_TestCase
         $target = new \Galmi\Xacml\Target();
         $target->addTargetAnyOf($anyOf);
 
-        $rule = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::PERMIT, $target);
+        $rule = new \Galmi\Xacml\Rule();
+        $rule->setEffect(\Galmi\Xacml\Decision::PERMIT);
+        $rule->setTarget($target);
+
         $this->assertEquals(\Galmi\Xacml\Decision::INDETERMINATE_P, $rule->evaluate($request));
 
-        $rule = new \Galmi\Xacml\Rule(\Galmi\Xacml\Decision::DENY, $target);
+        $rule = new \Galmi\Xacml\Rule();
+        $rule->setEffect(\Galmi\Xacml\Decision::DENY);
+        $rule->setTarget($target);
         $this->assertEquals(\Galmi\Xacml\Decision::INDETERMINATE_D, $rule->evaluate($request));
     }
 

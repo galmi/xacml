@@ -73,6 +73,19 @@ class Apply extends Expression
     }
 
     /**
+     * @param Expression[] $expressions
+     * @return $this
+     */
+    public function setExpressions($expressions)
+    {
+        foreach ($expressions as $expression) {
+            $this->addExpression($expression);
+        }
+
+        return $this;
+    }
+
+    /**
      * Remove Expression
      *
      * @param Expression $expression
