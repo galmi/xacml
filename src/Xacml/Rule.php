@@ -134,7 +134,7 @@ class Rule implements Evaluable
      *
      * @param Expression $condition
      */
-    public function setCondition($condition)
+    public function setCondition(Expression $condition)
     {
         $this->condition = $condition;
     }
