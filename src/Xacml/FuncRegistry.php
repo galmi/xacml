@@ -23,8 +23,8 @@ class FuncRegistry
 
     const STRING_NORMALIZE_TO_LOWER_CASE = 'string-normalize-to-lower-case';
 
-    const FUNC_AND = 'and';
-
+    const FUNC_AND = 'func-and';
+    const FUNC_OR = 'func-or';
 
     const GROUP_EQUALITY = 'equality-group';
     const GROUP_LOGICAL = 'logical-group';
@@ -54,7 +54,8 @@ class FuncRegistry
             self::DATE_TIME_EQUAL,
         ],
         self::GROUP_LOGICAL => [
-            self::FUNC_AND
+            self::FUNC_AND,
+            self::FUNC_OR
         ],
         self::GROUP_HELPERS => [
             self::STRING_NORMALIZE_TO_LOWER_CASE
@@ -76,6 +77,7 @@ class FuncRegistry
             self::STRING_NORMALIZE_TO_LOWER_CASE => Func\StringConversion\StringNormalizeToLowerCase::class,
 
             self::FUNC_AND => Func\Logical\FuncAnd::class,
+            self::FUNC_OR => Func\Logical\FuncOr::class,
 
         ];
     }

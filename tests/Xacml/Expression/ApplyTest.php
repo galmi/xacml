@@ -65,7 +65,7 @@ class ApplyTest extends PHPUnit_Framework_TestCase
         $apply2->addExpression($expression21);
         $apply2->addExpression($expression22);
 
-        $apply = new \Galmi\Xacml\Expression\Apply('and');
+        $apply = new \Galmi\Xacml\Expression\Apply('func-and');
         $apply->addExpression($apply1);
         $apply->addExpression($apply2);
 
@@ -90,7 +90,7 @@ class ApplyTest extends PHPUnit_Framework_TestCase
         $apply2->addExpression($expression21);
         $apply2->addExpression($expression22);
 
-        $apply = new \Galmi\Xacml\Expression\Apply('and');
+        $apply = new \Galmi\Xacml\Expression\Apply('func-and');
         $apply->addExpression($apply1);
         $apply->addExpression($apply2);
 
