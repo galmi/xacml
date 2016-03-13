@@ -25,12 +25,41 @@ class FuncRegistry
 
     const FUNC_AND = 'and';
 
+
+    const GROUP_EQUALITY = 'equality-group';
+    const GROUP_LOGICAL = 'logical-group';
+    const GROUP_HELPERS = 'helpers-group';
+
     /**
      * List of functionId list and their class
      *
      * @var array
      */
     private $functions = array();
+
+    /**
+     * List of groups and functions ids
+     *
+     * @var array
+     */
+    private $functionsGroups = [
+        self::GROUP_EQUALITY => [
+            self::STRING_EQUAL,
+            self::STRING_EQUAL_IGNORE_CASE,
+            self::BOOLEAN_EQUAL,
+            self::INTEGER_EQUAL,
+            self::DOUBLE_EQUAL,
+            self::DATE_EQUAL,
+            self::TIME_EQUAL,
+            self::DATE_TIME_EQUAL,
+        ],
+        self::GROUP_LOGICAL => [
+            self::FUNC_AND
+        ],
+        self::GROUP_HELPERS => [
+            self::STRING_NORMALIZE_TO_LOWER_CASE
+        ]
+    ];
 
     public function __construct()
     {
@@ -83,4 +112,73 @@ class FuncRegistry
         return new $className();
     }
 
+    /**
+     * @return array
+     */
+    public function getFunctions()
+    {
+        return $this->functions;
+    }
+
+    /**
+     * Add function to group
+     *
+     * @param $functionId
+     * @param $groupId
+     * @return $this
+     */
+    public function addFunctionToGroup($functionId, $groupId)
+    {
+        if (!isset($this->functionsGroups[$groupId])) {
+            $this->functionsGroups[$groupId] = [];
+        }
+        $this->functionsGroups[$groupId][] = $functionId;
+
+        return $this;
+    }
+
+    /**
+     * Get functions list for group
+     *
+     * @param $groupId
+     * @return array
+     */
+    public function getGroupFunctions($groupId)
+    {
+        if (isset($this->functionsGroups[$groupId])) {
+            return $this->functionsGroups[$groupId];
+        }
+
+        return [];
+    }
+
+    /**
+     * Getter for equality functions
+     *
+     * @return array
+     */
+    public function getEqualityFunctions()
+    {
+        return $this->functionsGroups[self::GROUP_EQUALITY];
+    }
+
+    /**
+     * Getter for logical functions
+     *
+     * @return mixed
+     */
+    public function getLogicalFunction()
+    {
+        return $this->functionsGroups[self::GROUP_LOGICAL];
+    }
+
+    /**
+     * Getter for helpers functions list
+     *
+     * @return mixed
+     */
+    public function getHelpers()
+    {
+        return $this->functionsGroups[self::GROUP_HELPERS];
+    }
 }
