@@ -130,4 +130,31 @@ class Apply extends Expression
         return $this->getFunc()->evaluate($values);
     }
 
+    /**
+     * @return string
+     */
+    public function getFunctionId()
+    {
+        return $this->functionId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return Apply
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
 }
